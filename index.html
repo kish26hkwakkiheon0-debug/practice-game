@@ -1,11 +1,14 @@
-<!DOCTYPE html><html lang="ko">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#ffffff"><title>number game</title><style>
+<meta name="theme-color" content="#ffffff">
+<title>숫자 탭 게임</title>
 
+<style>
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -17,10 +20,8 @@
   --bg: #ffffff;
   --bg2: #f5f5f3;
   --bg3: #e8e8e5;
-
   --text: #1a1a1a;
   --text2: #666660;
-
   --border: rgba(0,0,0,0.13);
   --border2: rgba(0,0,0,0.22);
 
@@ -41,15 +42,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
   :root {
     --bg: #1c1c1e;
     --bg2: #2c2c2e;
     --bg3: #3a3a3c;
-
     --text: #f2f2f7;
     --text2: #8e8e93;
-
     --border: rgba(255,255,255,0.1);
     --border2: rgba(255,255,255,0.2);
 
@@ -65,21 +63,13 @@
     --info: #64a8f0;
     --gold: #f0a500;
   }
-
 }
 
 body {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
-
   min-height: 100vh;
-
   overscroll-behavior: none;
 }
 
@@ -89,27 +79,16 @@ body {
   padding: 1.5rem 1rem 3rem;
 }
 
-
-/* ========================================
-   공통 버튼
-======================================== */
-
 .btn-primary {
-
   display: block;
   width: 100%;
-
   padding: 14px;
-
   font-size: 16px;
   font-weight: 600;
-
   border-radius: var(--radius-sm);
   border: none;
-
   background: var(--text);
   color: var(--bg);
-
   cursor: pointer;
   touch-action: manipulation;
 }
@@ -119,24 +98,16 @@ body {
   transform: scale(0.98);
 }
 
-
 .btn-secondary {
-
   display: block;
   width: 100%;
-
   padding: 13px;
-
   font-size: 15px;
   font-weight: 500;
-
   border-radius: var(--radius-sm);
-
   border: 0.5px solid var(--border2);
-
   background: var(--bg);
   color: var(--text);
-
   cursor: pointer;
   touch-action: manipulation;
 }
@@ -146,456 +117,225 @@ body {
 }
 
 
-/* ========================================
-   공통 타이틀
-======================================== */
-
-.game-title {
-
-  font-size: 32px;
-  font-weight: 800;
-
-  margin-bottom: 8px;
-
-  text-align: center;
-
-  letter-spacing: -0.5px;
-}
-
-
-.game-sub {
-
-  font-size: 14px;
-
-  color: var(--text2);
-
-  margin-bottom: 2.5rem;
-
-  text-align: center;
-
-  line-height: 1.6;
-}
-
-
-/* ========================================
-   화면 0: 타이틀
-======================================== */
-
-#screen-title {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding-top: 4rem;
-}
-
-
-.title-menu {
-
-  width: 100%;
-
-  max-width: 300px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 12px;
-}
-
-
-/* ========================================
-   화면 1: 닉네임
-======================================== */
+/* ══ 화면 1: 닉네임 ══ */
 
 #screen-nick {
-
-  display: none;
-
+  display: flex;
   flex-direction: column;
-
   align-items: center;
-
   padding-top: 3.5rem;
 }
 
+.game-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.game-sub {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 2.5rem;
+  text-align: center;
+  line-height: 1.6;
+}
 
 #nick-input {
-
   width: 100%;
-
   max-width: 300px;
-
   font-size: 17px;
-
   padding: 12px 14px;
-
   margin-bottom: 14px;
-
   border-radius: var(--radius-sm);
-
   border: 0.5px solid var(--border2);
-
   background: var(--bg);
-
   color: var(--text);
-
   outline: none;
-
   -webkit-appearance: none;
 }
 
-
 #nick-input:focus {
-
   border-color: var(--info);
-
-  box-shadow:
-    0 0 0 3px
-    rgba(24,95,165,0.12);
+  box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
 }
-
 
 #nick-ok {
   max-width: 300px;
 }
 
 
-/* ========================================
-   화면 2: 게임
-======================================== */
+/* ══ 화면 2: 게임 ══ */
 
 #screen-game {
   display: none;
 }
 
-
 #header {
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   margin-bottom: 1rem;
 }
 
-
 #nick-badge {
-
   flex: 1;
-
   font-size: 14px;
-
   color: var(--text2);
-
   font-weight: 500;
-
   white-space: nowrap;
-
   overflow: hidden;
-
   text-overflow: ellipsis;
 }
 
-
 #timer-wrap {
-
   display: flex;
-
   flex-direction: column;
-
   align-items: flex-end;
-
   flex-shrink: 0;
 }
 
-
 #timer {
-
   font-size: 32px;
-
   font-weight: 700;
-
   font-variant-numeric: tabular-nums;
-
   line-height: 1;
-
   color: var(--text);
 }
-
 
 #timer.urgent {
   color: var(--danger);
 }
 
-
 #timer-label {
-
   font-size: 11px;
-
   color: var(--text2);
-
   margin-top: 1px;
 }
 
-
 #score-wrap {
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   background: var(--bg2);
-
   border-radius: var(--radius-sm);
-
   padding: 10px 16px;
-
   margin-bottom: 1rem;
 }
 
-
 #score-wrap .s-label {
-
   font-size: 13px;
-
   color: var(--text2);
 }
 
-
 #score-wrap .s-val {
-
   font-size: 22px;
-
   font-weight: 700;
-
   font-variant-numeric: tabular-nums;
 }
 
-
 #next-hint {
-
   font-size: 13px;
-
   color: var(--text2);
 }
 
-
 #next-hint span {
-
   color: var(--active-text);
-
   font-weight: 700;
-
   font-size: 16px;
 }
-
 
 #start-btn {
-
   display: block;
-
   width: 100%;
-
   padding: 14px;
-
   font-size: 16px;
-
   font-weight: 600;
-
   border-radius: var(--radius-sm);
-
   border: none;
-
   background: var(--text);
-
   color: var(--bg);
-
   cursor: pointer;
-
   touch-action: manipulation;
-
   margin-bottom: 1rem;
 }
-
 
 #start-btn:active {
   opacity: 0.75;
 }
 
-
 #start-btn:disabled {
   opacity: 0.35;
 }
 
-
 #countdown {
-
   height: 72px;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
   font-size: 58px;
-
   font-weight: 700;
 }
 
-
-/* ========================================
-   숫자 그리드
-======================================== */
-
 #grid {
-
   display: grid;
-
-  grid-template-columns:
-    repeat(3, 1fr);
-
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-
   margin-bottom: 10px;
 }
 
-
 .card {
-
   aspect-ratio: 1;
-
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   font-size: 28px;
-
   font-weight: 700;
 
   border-radius: var(--radius);
-
-  border:
-    0.5px solid
-    var(--border2);
+  border: 0.5px solid var(--border2);
 
   background: var(--bg);
-
   color: var(--text);
 
   user-select: none;
-
   -webkit-user-select: none;
 
   touch-action: manipulation;
-
   cursor: default;
 
   transition:
     transform 0.08s,
     background 0.08s,
-    opacity 0.2s;
+    opacity 0.15s;
 }
-
 
 .card.active {
-
   background: var(--bg);
-
-  border:
-    0.5px solid
-    var(--border2);
-
+  border: 0.5px solid var(--border2);
   color: var(--text);
-
   cursor: pointer;
 }
-
 
 .card.active:active {
   transform: scale(0.91);
 }
 
 
-.card.done {
+/* 숫자를 맞게 눌렀을 때 사라지는 칸 */
 
-  background: var(--done-bg);
-
-  border-color: var(--done-border);
-
-  color: var(--done-text);
-
-  font-size: 24px;
+.card.empty {
+  visibility: hidden;
+  pointer-events: none;
 }
 
-
-/* ========================================
-   아이템 카드
-======================================== */
-
-.card.item {
-
-  background: var(--active-bg);
-
-  border-color: var(--active-border);
-
-  color: var(--active-text);
-
-  font-size: 30px;
-
-  cursor: pointer;
-}
-
-
-.card.item:active {
-  transform: scale(0.91);
-}
-
-
-/* ========================================
-   오답 효과
-======================================== */
 
 .card.wrong {
-
-  animation: shake 0.4s;
-
-  background:
-    rgba(226,75,74,0.15)
-    !important;
-
-  border-color:
-    var(--danger)
-    !important;
-
-  color:
-    var(--danger)
-    !important;
+  animation: shake .35s;
 }
-
-
-#grid.locked .card {
-
-  pointer-events: none;
-
-  opacity: 0.6;
-}
-
 
 @keyframes shake {
-
   0%,100% {
     transform: translateX(0);
   }
@@ -615,401 +355,346 @@ body {
   80% {
     transform: translateX(5px);
   }
-
 }
 
 
-/* ========================================
-   화면 3: 랭킹
-======================================== */
-
-#screen-leaderboard {
-
-  display: none;
-
-  padding-top: 1rem;
-}
-
-
-/* ========================================
-   결과 팝업
-======================================== */
+/* ══ 화면 3: 결과 팝업 ══ */
 
 #screen-result {
-
   display: none;
-
   position: fixed;
-
   inset: 0;
-
-  background:
-    rgba(0,0,0,0.6);
-
+  background: rgba(0,0,0,0.6);
   z-index: 200;
 
   align-items: flex-end;
-
   justify-content: center;
 }
-
 
 #screen-result.show {
   display: flex;
 }
 
-
 #result-sheet {
-
   background: var(--bg);
-
   width: 100%;
-
   max-width: 480px;
 
-  border-radius:
-    20px 20px 0 0;
+  border-radius: 20px 20px 0 0;
 
-  padding:
-    1.5rem
-    1.25rem
-    2.5rem;
+  padding: 1.5rem 1.25rem 2.5rem;
 
   max-height: 92vh;
-
   overflow-y: auto;
 
   -webkit-overflow-scrolling: touch;
 
-  animation:
-    slideUp 0.25s ease;
+  animation: slideUp 0.25s ease;
 }
 
-
 @keyframes slideUp {
-
   from {
-
-    transform:
-      translateY(60px);
-
+    transform: translateY(60px);
     opacity: 0;
-
   }
 
   to {
-
-    transform:
-      translateY(0);
-
+    transform: translateY(0);
     opacity: 1;
-
   }
-
 }
 
-
 .result-my {
-
   text-align: center;
-
   padding-bottom: 1.25rem;
-
-  border-bottom:
-    0.5px solid
-    var(--border);
-
+  border-bottom: 0.5px solid var(--border);
   margin-bottom: 1.25rem;
 }
 
-
 .result-my .r-lbl {
-
   font-size: 12px;
-
   color: var(--text2);
-
   margin-bottom: 4px;
 }
 
-
 .result-my .r-name {
-
   font-size: 16px;
-
   font-weight: 600;
-
   margin-bottom: 6px;
 }
 
-
 .result-my .r-score {
-
   font-size: 52px;
-
   font-weight: 700;
-
   line-height: 1;
-
   margin-bottom: 4px;
 }
 
-
 .result-my .r-score-label {
-
   font-size: 13px;
-
   color: var(--text2);
-
   margin-bottom: 8px;
 }
 
-
 .result-my .r-rank {
-
   font-size: 14px;
-
   color: var(--text2);
 }
 
-
 .result-my .r-rank strong {
-
   color: var(--info);
-
   font-size: 20px;
 }
 
-
-/* ========================================
-   랭킹
-======================================== */
-
 .lb-header {
-
-  font-size: 15px;
-
-  font-weight: 700;
-
-  color: var(--text);
-
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
   text-align: center;
-
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
-
 
 .lb-row {
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 
-  padding: 10px 4px;
+  padding: 8px 4px;
 
-  border-bottom:
-    0.5px solid
-    var(--border);
+  border-bottom: 0.5px solid var(--border);
 
   font-size: 15px;
 }
-
 
 .lb-row:last-child {
   border-bottom: none;
 }
 
-
 .lb-rank {
-
   width: 28px;
-
   text-align: center;
-
   font-weight: 700;
-
   color: var(--text2);
-
   flex-shrink: 0;
-
   font-size: 14px;
 }
 
-
-.lb-rank.gold,
-.lb-rank.silver,
-.lb-rank.bronze {
-
+.lb-rank.gold {
   font-size: 20px;
 }
 
+.lb-rank.silver {
+  font-size: 20px;
+}
+
+.lb-rank.bronze {
+  font-size: 20px;
+}
 
 .lb-name {
-
   flex: 1;
-
   color: var(--text);
-
   overflow: hidden;
-
   text-overflow: ellipsis;
-
   white-space: nowrap;
 }
 
-
 .lb-score {
-
   font-weight: 700;
-
   color: var(--text);
-
   min-width: 48px;
-
   text-align: right;
 }
 
-
 .lb-row.me {
-
-  background:
-    rgba(24,95,165,0.07);
-
+  background: rgba(24,95,165,0.07);
   border-radius: 8px;
-
   margin: 2px -4px;
-
-  padding: 10px 8px;
+  padding: 8px 8px;
 }
-
 
 .lb-row.me .lb-name,
 .lb-row.me .lb-score {
-
   color: var(--info);
 }
-
 
 .lb-row.me .lb-rank {
   color: var(--info);
 }
 
-
-.lb-loading-text {
-
+#lb-loading {
   text-align: center;
-
-  padding: 2rem 0;
-
+  padding: 1.5rem 0;
   font-size: 14px;
-
   color: var(--text2);
 }
 
-
 .result-actions {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 10px;
-
   margin-top: 1.5rem;
 }
 
-
 #credit {
-
   position: fixed;
-
   bottom: 14px;
-
   right: 16px;
 
   font-size: 11px;
-
   color: var(--text2);
 
   opacity: 0.6;
 
   pointer-events: none;
-
   z-index: 10;
 }
+</style>
+</head>
 
-</style></head><body><div id="app">  <!-- ======================================
-       화면 0: 타이틀
-  ======================================= -->  <div id="screen-title"><div class="game-title">
-  number game
-</div>
 
-<div class="game-sub">
-  15초 안에 최대한 많은 숫자를<br>
-  순서대로 눌러보세요
-</div>
+<body>
 
-<div class="title-menu">
+<div id="app">
 
-  <button
-    id="btn-play"
-    class="btn-primary"
-  >
-    플레이
-  </button>
+  <!-- 화면 1: 닉네임 입력 -->
 
-  <button
-    id="btn-rank"
-    class="btn-secondary"
-  >
-    랭킹 보기
-  </button>
+  <div id="screen-nick">
 
-</div>
-
-  </div>  <!-- ======================================
-       화면 1: 닉네임
-  ======================================= -->  <div id="screen-nick"><div class="game-title">
-  닉네임 설정
-</div>
-
-<div class="game-sub">
-  랭킹에 등록할 닉네임을 입력해 주세요
-</div>
-
-<input
-  id="nick-input"
-  type="text"
-  maxlength="12"
-  placeholder="닉네임 입력 (최대 12자)"
-  autocomplete="off"
-  autocorrect="off"
-  spellcheck="false"
-/>
-
-<button
-  id="nick-ok"
-  class="btn-primary"
->
-  게임 시작
-</button>
-
-  </div>  <!-- ======================================
-       화면 2: 게임
-  ======================================= -->  <div id="screen-game"><div id="header">
-
-  <span id="nick-badge"></span>
-
-  <div id="timer-wrap">
-
-    <div id="timer">
-      15
+    <div class="game-title">
+      숫자 탭 게임
     </div>
 
-    <div id="timer-label">
-      남은 시간
+    <div class="game-sub">
+      15초 안에 최대한 많은 숫자를<br>
+      순서대로 눌러보세요
+    </div>
+
+    <input
+      id="nick-input"
+      type="text"
+      maxlength="12"
+      placeholder="닉네임 입력 (최대 12자)"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+    />
+
+    <button id="nick-ok" class="btn-primary">
+      시작하기
+    </button>
+
+  </div>
+
+
+  <!-- 화면 2: 게임 -->
+
+  <div id="screen-game">
+
+    <div id="header">
+
+      <span id="nick-badge"></span>
+
+      <div id="timer-wrap">
+
+        <div id="timer">
+          15
+        </div>
+
+        <div id="timer-label">
+          남은 시간
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="score-wrap">
+
+      <div>
+
+        <div class="s-label">
+          현재 점수
+        </div>
+
+        <div class="s-val" id="score-disp">
+          0
+        </div>
+
+      </div>
+
+
+      <div id="next-hint">
+        다음 숫자
+        <span id="next-num">1</span>
+      </div>
+
+    </div>
+
+
+    <button id="start-btn">
+      시작
+    </button>
+
+
+    <div id="countdown"></div>
+
+    <div id="grid"></div>
+
+  </div>
+
+</div>
+
+
+<!-- 화면 3: 결과 팝업 -->
+
+<div id="screen-result">
+
+  <div id="result-sheet">
+
+    <div class="result-my">
+
+      <div class="r-lbl">
+        최종 점수
+      </div>
+
+      <div class="r-name" id="r-name"></div>
+
+      <div class="r-score" id="r-score">
+        0
+      </div>
+
+      <div class="r-score-label">
+        개
+      </div>
+
+      <div class="r-rank" id="r-rank"></div>
+
+    </div>
+
+
+    <div class="lb-header">
+      랭킹 TOP 10
+    </div>
+
+    <div id="lb-loading">
+      불러오는 중...
+    </div>
+
+    <div id="lb-rows"></div>
+
+
+    <div class="result-actions">
+
+      <button id="btn-again" class="btn-primary">
+        같은 닉네임으로 다시 도전
+      </button>
+
+      <button id="btn-new" class="btn-secondary">
+        닉네임 변경 후 다시 시작
+      </button>
+
     </div>
 
   </div>
@@ -1017,354 +702,133 @@ body {
 </div>
 
 
-<div id="score-wrap">
+<!-- Firebase SDK -->
 
-  <div>
-
-    <div class="s-label">
-      현재 점수
-    </div>
-
-    <div
-      class="s-val"
-      id="score-disp"
-    >
-      0
-    </div>
-
-  </div>
-
-  <div id="next-hint">
-
-    다음 숫자
-    <span id="next-num">
-      1
-    </span>
-
-  </div>
-
-</div>
-
-
-<button id="start-btn">
-  시작
-</button>
-
-
-<div id="countdown"></div>
-
-
-<div id="grid"></div>
-
-  </div>  <!-- ======================================
-       화면 3: 랭킹
-  ======================================= -->  <div id="screen-leaderboard"><div
-  class="game-title"
-  style="
-    font-size: 24px;
-    margin-bottom: 1.5rem;
-  "
->
-  명예의 전당 (TOP 10)
-</div>
-
-
-<div
-  id="standalone-lb-loading"
-  class="lb-loading-text"
->
-  랭킹 불러오는 중...
-</div>
-
-
-<div id="standalone-lb-rows"></div>
-
-
-<div style="margin-top: 2rem;">
-
-  <button
-    id="btn-back-title"
-    class="btn-secondary"
-  >
-    메인 화면으로
-  </button>
-
-</div>
-
-  </div></div><!-- ======================================
-     결과 팝업
-======================================= --><div id="screen-result">  <div id="result-sheet"><div class="result-my">
-
-  <div class="r-lbl">
-    최종 점수
-  </div>
-
-  <div
-    class="r-name"
-    id="r-name"
-  ></div>
-
-  <div
-    class="r-score"
-    id="r-score"
-  >
-    0
-  </div>
-
-  <div class="r-score-label">
-    개
-  </div>
-
-  <div
-    class="r-rank"
-    id="r-rank"
-  ></div>
-
-</div>
-
-
-<div class="lb-header">
-  랭킹 TOP 10
-</div>
-
-
-<div
-  id="lb-loading"
-  class="lb-loading-text"
->
-  불러오는 중...
-</div>
-
-
-<div id="lb-rows"></div>
-
-
-<div class="result-actions">
-
-  <button
-    id="btn-again"
-    class="btn-primary"
-  >
-    같은 닉네임으로 다시 도전
-  </button>
-
-  <button
-    id="btn-new"
-    class="btn-secondary"
-  >
-    닉네임 변경 후 다시 시작
-  </button>
-
-  <button
-    id="btn-home"
-    class="btn-secondary"
-  >
-    메인 화면으로
-  </button>
-
-</div>
-
-  </div></div><!-- ======================================
-     Firebase
-======================================= --><script type="module">
+<script type="module">
 
 import {
   initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
   getDatabase,
   ref,
   push,
   get
-}
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-
-/* ======================================
-   Firebase 설정
-======================================= */
 
 const firebaseConfig = {
 
-  apiKey:
-    "AIzaSyDVrf8vbtBHJYD93EhXosITNmgym80GOMw",
+  apiKey: "AIzaSyDVrf8vbtBHJYD93EhXosITNmgym80GOMw",
 
-  authDomain:
-    "numberupgame.firebaseapp.com",
+  authDomain: "numberupgame.firebaseapp.com",
 
   databaseURL:
     "https://numberupgame-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-  projectId:
-    "numberupgame",
+  projectId: "numberupgame",
 
   storageBucket:
     "numberupgame.firebasestorage.app",
 
-  messagingSenderId:
-    "209419310847",
+  messagingSenderId: "209419310847",
 
   appId:
     "1:209419310847:web:916c8f6fc0a730b8191eca"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+window.fbSave = async (name, score) => {
+
+  await push(
+    ref(db, 'scores'),
+    {
+      name,
+      score,
+      t: Date.now()
+    }
+  );
 
 };
 
 
-const app =
-  initializeApp(firebaseConfig);
+window.fbLoadTop10 = async () => {
+
+  const snap = await get(
+    ref(db, 'scores')
+  );
+
+  if (!snap.exists()) {
+    return [];
+  }
+
+  const rows = Object.values(snap.val());
 
 
-const db =
-  getDatabase(app);
+  // 닉네임당 최고 기록만 남기기
 
+  const best = {};
 
-/* ======================================
-   점수 저장
-======================================= */
+  rows.forEach(r => {
 
-window.fbSave =
-  async (name, score) => {
+    if (
+      !best[r.name] ||
+      r.score > best[r.name].score
+    ) {
 
-    await push(
-      ref(db, 'scores'),
-      {
-        name,
-        score,
-        t: Date.now()
-      }
-    );
+      best[r.name] = r;
 
-  };
-
-
-/* ======================================
-   TOP 10 불러오기
-======================================= */
-
-window.fbLoadTop10 =
-  async () => {
-
-    const snap =
-      await get(
-        ref(db, 'scores')
-      );
-
-
-    if (!snap.exists()) {
-      return [];
     }
 
-
-    const rows =
-      Object.values(
-        snap.val()
-      );
+  });
 
 
-    const best = {};
+  return Object.values(best)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 10);
+
+};
+
+</script>
 
 
-    rows.forEach(r => {
-
-      if (
-        !best[r.name] ||
-        r.score >
-        best[r.name].score
-      ) {
-
-        best[r.name] = r;
-
-      }
-
-    });
-
-
-    return Object.values(best)
-
-      .sort(
-        (a, b) =>
-          b.score - a.score
-      )
-
-      .slice(0, 10);
-
-  };
-
-</script><script>
-
-/* ======================================
-   DOM helper
-======================================= */
+<script>
 
 const $ = id =>
   document.getElementById(id);
 
 
-/* ======================================
-   게임 변수
-======================================= */
-
 let nickname = '';
 
 let cells = [];
+
 /*
-  각 cell:
-
-  {
-    el: DOM 요소,
-    num: 실제 숫자,
-    item: 아이템 표시 여부
-  }
+  현재 눌러야 하는 숫자
 */
-
 let nextExp = 1;
 
+/*
+  현재 점수
+*/
 let score = 0;
 
+/*
+  남은 시간
+*/
 let timeLeft = 15;
 
 let timerInt = null;
 
 let gameActive = false;
 
-let isLocked = false;
 
-
-/* ======================================
-   아이템 설정
-======================================= */
-
-/*
-  숫자를 맞힌 후
-  20% 확률로 아이템 생성
-*/
-
-const ITEM_CHANCE = 0.20;
-
-
-/*
-  아이템을 누르면
-  추가되는 시간
-*/
-
-const ITEM_TIME_BONUS = 3;
-
-
-/*
-  현재 아이템이 존재하는지
-*/
-
-let itemActive = false;
-
-
-/* ======================================
-   유틸
-======================================= */
+/* ── 유틸 ── */
 
 function delay(ms) {
 
@@ -1375,54 +839,21 @@ function delay(ms) {
 }
 
 
-/* ======================================
-   화면 전환
-======================================= */
+/* ── 화면 전환 ── */
 
-function hideAllScreens() {
+function showNick() {
 
-  $('screen-title').style.display =
-    'none';
+  $('screen-nick').style.display = 'flex';
 
-  $('screen-nick').style.display =
-    'none';
-
-  $('screen-game').style.display =
-    'none';
-
-  $('screen-leaderboard').style.display =
-    'none';
+  $('screen-game').style.display = 'none';
 
   $('screen-result')
     .classList.remove('show');
 
-}
-
-
-function showTitle() {
-
-  hideAllScreens();
-
-  $('screen-title').style.display =
-    'flex';
-
-}
-
-
-function showNick() {
-
-  hideAllScreens();
-
-  $('screen-nick').style.display =
-    'flex';
-
-  $('nick-input').value =
-    nickname;
-
+  $('nick-input').value = '';
 
   setTimeout(
-    () =>
-      $('nick-input').focus(),
+    () => $('nick-input').focus(),
     100
   );
 
@@ -1431,55 +862,12 @@ function showNick() {
 
 function showGame() {
 
-  hideAllScreens();
+  $('screen-nick').style.display = 'none';
 
-  $('screen-game').style.display =
-    'block';
+  $('screen-game').style.display = 'block';
 
-}
-
-
-async function showLeaderboard() {
-
-  hideAllScreens();
-
-  $('screen-leaderboard').style.display =
-    'block';
-
-
-  $('standalone-lb-loading').style.display =
-    'block';
-
-
-  $('standalone-lb-rows').innerHTML =
-    '';
-
-
-  try {
-
-    const top10 =
-      await window.fbLoadTop10();
-
-
-    $('standalone-lb-loading').style.display =
-      'none';
-
-
-    renderRows(
-      $('standalone-lb-rows'),
-      top10
-    );
-
-  }
-
-  catch(e) {
-
-    console.error(e);
-
-    $('standalone-lb-loading').textContent =
-      '랭킹을 불러올 수 없습니다';
-
-  }
+  $('screen-result')
+    .classList.remove('show');
 
 }
 
@@ -1492,184 +880,126 @@ function showResult() {
 }
 
 
-/* ======================================
-   메뉴 버튼
-======================================= */
+/* ── 닉네임 ── */
 
-$('btn-play')
-  .addEventListener(
-    'click',
-    () => {
+$('nick-ok').addEventListener(
+  'click',
+  () => {
 
-      if (nickname) {
+    const v =
+      $('nick-input').value.trim();
 
-        showGame();
+    if (!v) {
 
-        resetGame();
+      $('nick-input').focus();
 
-      }
-
-      else {
-
-        showNick();
-
-      }
+      return;
 
     }
-  );
+
+    nickname = v;
+
+    $('nick-badge').textContent =
+      nickname;
+
+    showGame();
+
+    resetGame();
+
+  }
+);
 
 
-$('btn-rank')
-  .addEventListener(
-    'click',
-    showLeaderboard
-  );
+$('nick-input').addEventListener(
+  'keydown',
+  e => {
 
+    if (e.key === 'Enter') {
 
-$('btn-back-title')
-  .addEventListener(
-    'click',
-    showTitle
-  );
-
-
-/* ======================================
-   닉네임
-======================================= */
-
-$('nick-ok')
-  .addEventListener(
-    'click',
-    () => {
-
-      const v =
-        $('nick-input')
-          .value
-          .trim();
-
-
-      if (!v) {
-
-        $('nick-input').focus();
-
-        return;
-
-      }
-
-
-      nickname = v;
-
-
-      $('nick-badge').textContent =
-        nickname;
-
-
-      showGame();
-
-      resetGame();
+      $('nick-ok').click();
 
     }
-  );
+
+  }
+);
 
 
-$('nick-input')
-  .addEventListener(
-    'keydown',
-    e => {
+/* ── 숫자 배열 만들기 ── */
 
-      if (e.key === 'Enter') {
+function makeNumbers(start) {
 
-        $('nick-ok').click();
+  const numbers = [];
 
-      }
+  for (let i = 0; i < 9; i++) {
 
-    }
-  );
+    numbers.push(start + i);
+
+  }
+
+  return shuffle(numbers);
+
+}
 
 
-/* ======================================
-   그리드 생성
-======================================= */
+/* ── 그리드 초기화 ── */
 
 function buildGrid() {
 
-  const grid =
-    $('grid');
-
+  const grid = $('grid');
 
   grid.innerHTML = '';
-
-
-  grid.classList.remove(
-    'locked'
-  );
-
 
   cells = [];
 
 
-  isLocked = false;
-
-
-  itemActive = false;
-
+  /*
+    처음에는 1~9를 랜덤으로 배치
+  */
 
   const nums =
-    shuffle([
-      1,2,3,
-      4,5,6,
-      7,8,9
-    ]);
+    makeNumbers(nextExp);
 
 
-  nums.forEach(
-    (n, idx) => {
+  nums.forEach((n, idx) => {
 
-      const d =
-        document.createElement(
-          'div'
-        );
+    const d =
+      document.createElement('div');
 
+    d.className = 'card';
 
-      d.className =
-        'card';
+    d.textContent = n;
 
 
-      d.textContent =
-        n;
+    const tap = e => {
+
+      e.preventDefault();
+
+      onCard(idx);
+
+    };
 
 
-      const handleTap =
-        e => {
+    d.addEventListener(
+      'touchend',
+      tap,
+      { passive: false }
+    );
 
-          e.preventDefault();
-
-          onCard(idx);
-
-        };
-
-
-      d.addEventListener(
-        'pointerdown',
-        handleTap
-      );
+    d.addEventListener(
+      'click',
+      tap
+    );
 
 
-      grid.appendChild(d);
+    grid.appendChild(d);
 
 
-      cells.push({
+    cells.push({
+      el: d,
+      num: n
+    });
 
-        el: d,
-
-        num: n,
-
-        item: false
-
-      });
-
-    }
-  );
+  });
 
 
   updateActiveCard();
@@ -1677,15 +1007,11 @@ function buildGrid() {
 }
 
 
-/* ======================================
-   셔플
-======================================= */
+/* ── 배열 섞기 ── */
 
 function shuffle(a) {
 
-  const arr =
-    [...a];
-
+  const arr = [...a];
 
   for (
     let i = arr.length - 1;
@@ -1695,10 +1021,8 @@ function shuffle(a) {
 
     const j =
       Math.floor(
-        Math.random() *
-        (i + 1)
+        Math.random() * (i + 1)
       );
-
 
     [
       arr[i],
@@ -1711,15 +1035,12 @@ function shuffle(a) {
 
   }
 
-
   return arr;
 
 }
 
 
-/* ======================================
-   활성 카드 표시
-======================================= */
+/* ── 활성 카드 표시 갱신 ── */
 
 function updateActiveCard() {
 
@@ -1727,41 +1048,19 @@ function updateActiveCard() {
 
     c.el.classList.remove(
       'active',
-      'done',
-      'item'
+      'empty'
     );
 
 
     /*
-      아이템 카드
-
-      실제 num은 nextExp이지만
-      화면에서는 ⏱️로 표시
+      이미 눌러서 사라진 카드
     */
 
-    if (c.item) {
+    if (c.num === null) {
 
-      c.el.classList.add(
-        'active',
-        'item'
-      );
+      c.el.classList.add('empty');
 
       return;
-
-    }
-
-
-    /*
-      이미 지나간 숫자
-    */
-
-    if (
-      c.num < nextExp
-    ) {
-
-      c.el.classList.add(
-        'done'
-      );
 
     }
 
@@ -1770,13 +1069,9 @@ function updateActiveCard() {
       다음에 눌러야 하는 숫자
     */
 
-    if (
-      c.num === nextExp
-    ) {
+    if (c.num === nextExp) {
 
-      c.el.classList.add(
-        'active'
-      );
+      c.el.classList.add('active');
 
     }
 
@@ -1789,338 +1084,34 @@ function updateActiveCard() {
 }
 
 
-/* ======================================
-   카드 탭
-======================================= */
+/* ── 새로운 9개 숫자 생성 ── */
 
-function onCard(idx) {
+function refillGrid() {
 
-  if (
-    !gameActive ||
-    isLocked
-  ) {
+  /*
+    현재 nextExp부터
+    9개의 숫자를 생성
 
-    return;
+    예:
+    nextExp = 10
+    → 10~18
 
-  }
+    nextExp = 19
+    → 19~27
+  */
 
-
-  const cell =
-    cells[idx];
-
-
-  /* ====================================
-     아이템 카드
-  ==================================== */
-
-  if (cell.item) {
-
-    /*
-      아이템이 가리고 있는
-      실제 숫자가 nextExp인지 확인
-    */
-
-    if (
-      cell.num !== nextExp
-    ) {
-
-      return;
-
-    }
+  const nums =
+    makeNumbers(nextExp);
 
 
-    /*
-      아이템도
-      숫자를 맞힌 것으로 처리
-    */
+  cells.forEach((cell, index) => {
 
-    score++;
-
-
-    $('score-disp').textContent =
-      score;
-
-
-    /*
-      시간 +3초
-    */
-
-    timeLeft +=
-      ITEM_TIME_BONUS;
-
-
-    $('timer').textContent =
-      timeLeft;
-
-
-    /*
-      아이템 제거
-    */
-
-    cell.item = false;
-
-
-    /*
-      기존 숫자 시스템과 동일하게
-      nextExp + 9로 변경
-    */
-
-    const newNum =
-      nextExp + 9;
-
-
-    cell.num =
-      newNum;
-
+    cell.num = nums[index];
 
     cell.el.textContent =
-      newNum;
+      nums[index];
 
-
-    /*
-      다음 숫자로 진행
-    */
-
-    nextExp++;
-
-
-    /*
-      나머지 숫자 랜덤 재배열
-    */
-
-    const activeIndices =
-      cells
-
-        .map(
-          (c, i) => ({
-            c,
-            i
-          })
-        )
-
-        .filter(
-          ({ c }) =>
-            !c.item &&
-            c.num >= nextExp
-        );
-
-
-    const shuffledNums =
-      shuffle(
-        activeIndices.map(
-          ({ c }) => c.num
-        )
-      );
-
-
-    activeIndices.forEach(
-      ({ i }, j) => {
-
-        cells[i].num =
-          shuffledNums[j];
-
-        cells[i].el.textContent =
-          shuffledNums[j];
-
-      }
-    );
-
-
-    itemActive = false;
-
-
-    updateActiveCard();
-
-
-    return;
-
-  }
-
-
-  /* ====================================
-     일반 숫자
-  ==================================== */
-
-  if (
-    cell.num !== nextExp
-  ) {
-
-    /*
-      틀림
-
-      1초간 그리드 잠금
-    */
-
-    isLocked = true;
-
-
-    const grid =
-      $('grid');
-
-
-    grid.classList.add(
-      'locked'
-    );
-
-
-    cell.el.classList.add(
-      'wrong'
-    );
-
-
-    setTimeout(
-      () => {
-
-        cell.el.classList.remove(
-          'wrong'
-        );
-
-
-        grid.classList.remove(
-          'locked'
-        );
-
-
-        isLocked = false;
-
-      },
-      1000
-    );
-
-
-    return;
-
-  }
-
-
-  /* ====================================
-     숫자 정답
-  ==================================== */
-
-  score++;
-
-
-  $('score-disp').textContent =
-    score;
-
-
-  /*
-    누른 숫자를
-    +9 숫자로 변경
-  */
-
-  const newNum =
-    nextExp + 9;
-
-
-  cell.num =
-    newNum;
-
-
-  cell.el.textContent =
-    newNum;
-
-
-  /*
-    다음 숫자로
-  */
-
-  nextExp++;
-
-
-  /* ====================================
-     숫자 랜덤 재배열
-  ==================================== */
-
-  const activeIndices =
-    cells
-
-      .map(
-        (c, i) => ({
-          c,
-          i
-        })
-      )
-
-      .filter(
-        ({ c }) =>
-          !c.item &&
-          c.num >= nextExp
-      );
-
-
-  const shuffledNums =
-    shuffle(
-      activeIndices.map(
-        ({ c }) => c.num
-      )
-    );
-
-
-  activeIndices.forEach(
-    ({ i }, j) => {
-
-      cells[i].num =
-        shuffledNums[j];
-
-      cells[i].el.textContent =
-        shuffledNums[j];
-
-    }
-  );
-
-
-  /* ====================================
-     20% 확률로 아이템 생성
-  ==================================== */
-
-  if (
-    !itemActive &&
-    Math.random() < ITEM_CHANCE
-  ) {
-
-    /*
-      핵심:
-
-      "다음 숫자" 자체를
-      아이템 카드로 바꾼다.
-
-      예:
-
-      nextExp = 14
-
-      기존:
-      [ 14 ]
-
-      아이템:
-      [ ⏱️ ]
-
-      하지만 내부적으로는
-      여전히 num = 14
-    */
-
-    const targetCell =
-      cells.find(
-        c =>
-          !c.item &&
-          c.num === nextExp
-      );
-
-
-    if (targetCell) {
-
-      targetCell.item = true;
-
-
-      targetCell.el.textContent =
-        '⏱️';
-
-
-      itemActive = true;
-
-    }
-
-  }
+  });
 
 
   updateActiveCard();
@@ -2128,81 +1119,173 @@ function onCard(idx) {
 }
 
 
-/* ======================================
-   타이머
-======================================= */
+/* ── 카드 탭 ── */
+
+function onCard(idx) {
+
+  if (!gameActive) {
+    return;
+  }
+
+
+  const cell =
+    cells[idx];
+
+
+  /*
+    이미 사라진 카드라면 무시
+  */
+
+  if (cell.num === null) {
+    return;
+  }
+
+
+  /*
+    틀린 숫자를 누른 경우
+  */
+
+  if (cell.num !== nextExp) {
+
+    cell.el.classList.add('wrong');
+
+    setTimeout(
+      () =>
+        cell.el.classList.remove('wrong'),
+      350
+    );
+
+    return;
+
+  }
+
+
+  /*
+    정답
+  */
+
+  score++;
+
+  $('score-disp').textContent =
+    score;
+
+
+  /*
+    정답을 누른 버튼을 제거
+
+    숫자를 null로 만들고
+    화면에서는 empty 처리
+  */
+
+  cell.num = null;
+
+  cell.el.textContent = '';
+
+  cell.el.classList.remove('active');
+
+  cell.el.classList.add('empty');
+
+
+  /*
+    다음 숫자로 이동
+  */
+
+  nextExp++;
+
+
+  /*
+    9개가 모두 사라졌는지 확인
+  */
+
+  const remaining =
+    cells.filter(
+      c => c.num !== null
+    ).length;
+
+
+  /*
+    9개를 전부 눌렀다면
+    새로운 9개 숫자를 생성
+  */
+
+  if (remaining === 0) {
+
+    refillGrid();
+
+  } else {
+
+    /*
+      아직 같은 묶음에
+      숫자가 남아 있다면
+      배열을 절대 섞지 않는다.
+
+      즉,
+      버튼을 하나 누를 때마다
+      위치는 그대로 유지된다.
+    */
+
+    updateActiveCard();
+
+  }
+
+}
+
+
+/* ── 타이머 ── */
 
 function startTimer() {
 
   timeLeft = 15;
 
-
   $('timer').textContent =
     timeLeft;
 
-
-  $('timer').classList.remove(
-    'urgent'
-  );
+  $('timer')
+    .classList.remove('urgent');
 
 
   timerInt =
-    setInterval(
-      () => {
+    setInterval(() => {
 
-        timeLeft--;
+      timeLeft--;
 
-
-        $('timer').textContent =
-          timeLeft;
+      $('timer').textContent =
+        timeLeft;
 
 
-        if (
-          timeLeft <= 5
-        ) {
+      if (timeLeft <= 5) {
 
-          $('timer')
-            .classList.add(
-              'urgent'
-            );
+        $('timer')
+          .classList.add('urgent');
 
-        }
+      }
 
 
-        if (
-          timeLeft <= 0
-        ) {
+      if (timeLeft <= 0) {
 
-          endGame();
+        endGame();
 
-        }
+      }
 
-      },
-      1000
-    );
+    }, 1000);
 
 }
 
 
 function stopTimer() {
 
-  clearInterval(
-    timerInt
-  );
+  clearInterval(timerInt);
 
   timerInt = null;
 
 }
 
 
-/* ======================================
-   게임 리셋
-======================================= */
+/* ── 게임 리셋 ── */
 
 function resetGame() {
 
   stopTimer();
-
 
   nextExp = 1;
 
@@ -2210,29 +1293,21 @@ function resetGame() {
 
   gameActive = false;
 
-  isLocked = false;
-
-  itemActive = false;
-
   timeLeft = 15;
 
 
   $('timer').textContent =
     '15';
 
-
-  $('timer').classList.remove(
-    'urgent'
-  );
+  $('timer')
+    .classList.remove('urgent');
 
 
   $('score-disp').textContent =
     '0';
 
-
   $('next-num').textContent =
     '1';
-
 
   $('countdown').textContent =
     '';
@@ -2241,13 +1316,8 @@ function resetGame() {
   $('start-btn').style.display =
     'block';
 
-
   $('start-btn').disabled =
     false;
-
-
-  $('nick-badge').textContent =
-    nickname;
 
 
   buildGrid();
@@ -2255,15 +1325,12 @@ function resetGame() {
 }
 
 
-/* ======================================
-   게임 시작
-======================================= */
+/* ── 게임 시작 ── */
 
 async function startGame() {
 
   $('start-btn').disabled =
     true;
-
 
   $('start-btn').style.display =
     'none';
@@ -2272,10 +1339,6 @@ async function startGame() {
   nextExp = 1;
 
   score = 0;
-
-  isLocked = false;
-
-  itemActive = false;
 
 
   $('score-disp').textContent =
@@ -2290,16 +1353,11 @@ async function startGame() {
 
 
   for (
-    const s of [
-      '3',
-      '2',
-      '1',
-      '시작!'
-    ]
+    const s of
+    ['3', '2', '1', '시작!']
   ) {
 
-    cd.textContent =
-      s;
+    cd.textContent = s;
 
 
     await delay(
@@ -2311,43 +1369,23 @@ async function startGame() {
   }
 
 
-  cd.textContent =
-    '';
+  cd.textContent = '';
 
 
   gameActive = true;
-
 
   startTimer();
 
 }
 
 
-/* ======================================
-   게임 종료
-======================================= */
+/* ── 게임 종료 ── */
 
 async function endGame() {
 
-  /*
-    타이머가 이미 끝났다면
-    중복 실행 방지
-  */
-
-  if (!gameActive) {
-
-    return;
-
-  }
-
-
   stopTimer();
 
-
   gameActive = false;
-
-
-  isLocked = false;
 
 
   const finalScore =
@@ -2357,22 +1395,17 @@ async function endGame() {
   $('r-name').textContent =
     nickname;
 
-
   $('r-score').textContent =
     finalScore;
-
 
   $('r-rank').textContent =
     '';
 
-
   $('lb-rows').innerHTML =
     '';
 
-
   $('lb-loading').style.display =
     'block';
-
 
   $('lb-loading').textContent =
     '기록 저장 중...';
@@ -2401,18 +1434,16 @@ async function endGame() {
       'none';
 
 
-    renderResultRanking(
+    renderRanking(
       top10,
       nickname,
       finalScore
     );
 
-  }
 
-  catch(e) {
+  } catch(e) {
 
     console.error(e);
-
 
     $('lb-loading').textContent =
       '네트워크 오류 — 랭킹을 불러올 수 없습니다';
@@ -2422,15 +1453,12 @@ async function endGame() {
 }
 
 
-/* ======================================
-   랭킹 렌더링
-======================================= */
+/* ── 랭킹 렌더링 ── */
 
-function renderRows(
-  containerEl,
+function renderRanking(
   rows,
-  myName = null,
-  myScore = null
+  myName,
+  myScore
 ) {
 
   if (
@@ -2438,166 +1466,95 @@ function renderRows(
     rows.length === 0
   ) {
 
-    containerEl.innerHTML =
-      `
-      <div
-        style="
-          text-align:center;
-          padding:1.5rem;
-          color:var(--text2);
-          font-size:14px;
-        "
-      >
-        아직 기록이 없습니다
-      </div>
-      `;
+    $('lb-rows').innerHTML =
+      '<div style="text-align:center;padding:1rem;color:var(--text2);font-size:14px;">아직 기록이 없습니다</div>';
 
-
-    return -1;
+    return;
 
   }
 
 
-  const medals = [
-    '🥇',
-    '🥈',
-    '🥉'
-  ];
+  const medals =
+    ['🥇', '🥈', '🥉'];
 
-
-  const rankClasses = [
-    'gold',
-    'silver',
-    'bronze'
-  ];
+  const rankClasses =
+    ['gold', 'silver', 'bronze'];
 
 
   let myRank = -1;
 
 
   const html =
-    rows
+    rows.map((r, i) => {
 
-      .map(
-        (r, i) => {
-
-          const isMe =
-            (
-              myName &&
-              myScore !== null
-            ) &&
-            (
-              r.name === myName &&
-              r.score === myScore
-            );
+      const isMe =
+        r.name === myName &&
+        r.score === myScore;
 
 
-          if (
-            isMe &&
-            myRank < 0
-          ) {
+      if (
+        isMe &&
+        myRank < 0
+      ) {
 
-            myRank =
-              i + 1;
+        myRank = i + 1;
 
-          }
-
-
-          const rankLabel =
-            i < 3
-              ? medals[i]
-              : i + 1;
+      }
 
 
-          const rankCls =
-            i < 3
-              ? rankClasses[i]
-              : '';
+      const rankLabel =
+        i < 3
+          ? medals[i]
+          : (i + 1);
 
 
-          return `
-            <div
-              class="lb-row${isMe ? ' me' : ''}"
-            >
-
-              <span
-                class="lb-rank ${rankCls}"
-              >
-                ${rankLabel}
-              </span>
-
-              <span class="lb-name">
-                ${r.name}
-              </span>
-
-              <span class="lb-score">
-                ${r.score}개
-              </span>
-
-            </div>
-          `;
-
-        }
-      )
-      .join('');
+      const rankCls =
+        i < 3
+          ? rankClasses[i]
+          : '';
 
 
-  containerEl.innerHTML =
+      return `
+        <div class="lb-row${isMe ? ' me' : ''}">
+
+          <span class="lb-rank ${rankCls}">
+            ${rankLabel}
+          </span>
+
+          <span class="lb-name">
+            ${r.name}
+          </span>
+
+          <span class="lb-score">
+            ${r.score}개
+          </span>
+
+        </div>
+      `;
+
+    }).join('');
+
+
+  $('lb-rows').innerHTML =
     html;
 
 
-  return myRank;
-
-}
-
-
-/* ======================================
-   결과창 랭킹
-======================================= */
-
-function renderResultRanking(
-  rows,
-  myName,
-  myScore
-) {
-
-  const myRank =
-    renderRows(
-      $('lb-rows'),
-      rows,
-      myName,
-      myScore
-    );
-
-
-  if (
-    myRank > 0
-  ) {
+  if (myRank > 0) {
 
     $('r-rank').innerHTML =
-      `
-      <strong>
-        ${myRank}위
-      </strong>
-      /
-      ${rows.length}명
-      `;
+      `<strong>${myRank}위</strong> / ${rows.length}명`;
 
-  }
-
-  else {
+  } else {
 
     $('r-rank').innerHTML =
-      '10위권 밖';
+      `10위권 밖`;
 
   }
 
 }
 
 
-/* ======================================
-   결과창 버튼
-======================================= */
+/* ── 버튼 이벤트 ── */
 
 $('start-btn')
   .addEventListener(
@@ -2612,10 +1569,7 @@ $('btn-again')
     () => {
 
       $('screen-result')
-        .classList.remove(
-          'show'
-        );
-
+        .classList.remove('show');
 
       showGame();
 
@@ -2630,29 +1584,17 @@ $('btn-new')
     'click',
     () => {
 
-      $('screen-result')
-        .classList.remove(
-          'show'
-        );
-
-
       showNick();
 
     }
   );
 
+</script>
 
-$('btn-home')
-  .addEventListener(
-    'click',
-    () => {
 
-      showTitle();
-
-    }
-  );
-
-</script><div id="credit">
+<div id="credit">
   제작: 2026KISHYONGT
-</div></body>
+</div>
+
+</body>
 </html>
