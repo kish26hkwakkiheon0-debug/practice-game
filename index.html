@@ -33,6 +33,14 @@
   --done-border: rgba(59,109,17,0.3);
   --done-text: #27500a;
 
+  --correct-bg: #d9f5d0;
+  --correct-border: #3b8f32;
+  --correct-text: #24651f;
+
+  --wrong-bg: #ffe0df;
+  --wrong-border: #e24b4a;
+  --wrong-text: #b42323;
+
   --danger: #e24b4a;
   --info: #185fa5;
   --gold: #ba7517;
@@ -58,6 +66,14 @@
     --done-bg: #173404;
     --done-border: rgba(150,210,80,0.25);
     --done-text: #c0dd97;
+
+    --correct-bg: #1f4d24;
+    --correct-border: #65b85c;
+    --correct-text: #a9e5a2;
+
+    --wrong-bg: #5a2020;
+    --wrong-border: #ff6b6b;
+    --wrong-text: #ffb0b0;
 
     --danger: #ff6b6b;
     --info: #64a8f0;
@@ -286,6 +302,7 @@ body {
 
 .card {
   aspect-ratio: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -307,13 +324,18 @@ body {
 
   transition:
     transform 0.08s,
-    background 0.08s,
-    opacity 0.15s;
+    background 0.12s,
+    border-color 0.12s,
+    color 0.12s,
+    opacity 0.12s;
 }
+
+
+/* 정답을 누를 수 있는 버튼 */
 
 .card.active {
   background: var(--bg);
-  border: 0.5px solid var(--border2);
+  border-color: var(--border2);
   color: var(--text);
   cursor: pointer;
 }
@@ -323,7 +345,27 @@ body {
 }
 
 
-/* 숫자를 맞게 눌렀을 때 사라지는 칸 */
+/* ══ 정답 효과 ══ */
+
+.card.correct {
+  background: var(--correct-bg);
+  border-color: var(--correct-border);
+  color: var(--correct-text);
+  transform: scale(0.93);
+}
+
+
+/* ══ 오답 효과 ══ */
+
+.card.wrong {
+  background: var(--wrong-bg);
+  border-color: var(--wrong-border);
+  color: var(--wrong-text);
+  animation: shake .35s;
+}
+
+
+/* ══ 사라진 버튼 ══ */
 
 .card.empty {
   visibility: hidden;
@@ -331,9 +373,7 @@ body {
 }
 
 
-.card.wrong {
-  animation: shake .35s;
-}
+/* 오답 흔들림 */
 
 @keyframes shake {
   0%,100% {
@@ -557,7 +597,7 @@ body {
 
 <div id="app">
 
-  <!-- 화면 1: 닉네임 입력 -->
+  <!-- ══ 화면 1: 닉네임 ══ -->
 
   <div id="screen-nick">
 
@@ -587,7 +627,7 @@ body {
   </div>
 
 
-  <!-- 화면 2: 게임 -->
+  <!-- ══ 화면 2: 게임 ══ -->
 
   <div id="screen-game">
 
@@ -626,8 +666,10 @@ body {
 
 
       <div id="next-hint">
+
         다음 숫자
         <span id="next-num">1</span>
+
       </div>
 
     </div>
@@ -647,7 +689,7 @@ body {
 </div>
 
 
-<!-- 화면 3: 결과 팝업 -->
+<!-- ══ 화면 3: 결과 팝업 ══ -->
 
 <div id="screen-result">
 
@@ -666,7 +708,7 @@ body {
       </div>
 
       <div class="r-score-label">
-        개
+        점
       </div>
 
       <div class="r-rank" id="r-rank"></div>
@@ -702,7 +744,7 @@ body {
 </div>
 
 
-<!-- Firebase SDK -->
+<!-- ══ Firebase SDK ══ -->
 
 <script type="module">
 
@@ -720,107 +762,142 @@ import {
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyDVrf8vbtBHJYD93EhXosITNmgym80GOMw",
+  apiKey:
+    "AIzaSyDVrf8vbtBHJYD93EhXosITNmgym80GOMw",
 
-  authDomain: "numberupgame.firebaseapp.com",
+  authDomain:
+    "numberupgame.firebaseapp.com",
 
   databaseURL:
     "https://numberupgame-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-  projectId: "numberupgame",
+  projectId:
+    "numberupgame",
 
   storageBucket:
     "numberupgame.firebasestorage.app",
 
-  messagingSenderId: "209419310847",
+  messagingSenderId:
+    "209419310847",
 
   appId:
     "1:209419310847:web:916c8f6fc0a730b8191eca"
 };
 
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const db = getDatabase(app);
-
-
-window.fbSave = async (name, score) => {
-
-  await push(
-    ref(db, 'scores'),
-    {
-      name,
-      score,
-      t: Date.now()
-    }
-  );
-
-};
+const db =
+  getDatabase(app);
 
 
-window.fbLoadTop10 = async () => {
+window.fbSave =
+  async (name, score) => {
 
-  const snap = await get(
-    ref(db, 'scores')
-  );
+    await push(
+      ref(db, 'scores'),
+      {
+        name,
+        score,
+        t: Date.now()
+      }
+    );
 
-  if (!snap.exists()) {
-    return [];
-  }
-
-  const rows = Object.values(snap.val());
+  };
 
 
-  // 닉네임당 최고 기록만 남기기
+window.fbLoadTop10 =
+  async () => {
 
-  const best = {};
+    const snap =
+      await get(ref(db, 'scores'));
 
-  rows.forEach(r => {
 
-    if (
-      !best[r.name] ||
-      r.score > best[r.name].score
-    ) {
-
-      best[r.name] = r;
-
+    if (!snap.exists()) {
+      return [];
     }
 
-  });
+
+    const rows =
+      Object.values(snap.val());
 
 
-  return Object.values(best)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 10);
+    /*
+      닉네임당 최고 기록만 남기기
+    */
 
-};
+    const best = {};
+
+
+    rows.forEach(r => {
+
+      if (
+        !best[r.name] ||
+        r.score > best[r.name].score
+      ) {
+
+        best[r.name] = r;
+
+      }
+
+    });
+
+
+    return Object.values(best)
+      .sort(
+        (a, b) => b.score - a.score
+      )
+      .slice(0, 10);
+
+  };
 
 </script>
 
 
 <script>
 
-const $ = id =>
-  document.getElementById(id);
+/* ══ 기본 변수 ══ */
+
+const $ =
+  id => document.getElementById(id);
 
 
 let nickname = '';
 
 let cells = [];
 
-/*
-  현재 눌러야 하는 숫자
-*/
-let nextExp = 1;
 
 /*
-  현재 점수
+  다음에 눌러야 하는 숫자
 */
+
+let nextExp = 1;
+
+
+/*
+  총 점수
+*/
+
 let score = 0;
+
+
+/*
+  현재 라운드
+
+  1라운드 = 1점
+  2라운드 = 2점
+  3라운드 = 3점
+  ...
+*/
+
+let round = 1;
+
 
 /*
   남은 시간
 */
+
 let timeLeft = 15;
 
 let timerInt = null;
@@ -828,7 +905,7 @@ let timerInt = null;
 let gameActive = false;
 
 
-/* ── 유틸 ── */
+/* ══ 유틸 ══ */
 
 function delay(ms) {
 
@@ -839,18 +916,21 @@ function delay(ms) {
 }
 
 
-/* ── 화면 전환 ── */
+/* ══ 화면 전환 ══ */
 
 function showNick() {
 
-  $('screen-nick').style.display = 'flex';
+  $('screen-nick').style.display =
+    'flex';
 
-  $('screen-game').style.display = 'none';
+  $('screen-game').style.display =
+    'none';
 
   $('screen-result')
     .classList.remove('show');
 
   $('nick-input').value = '';
+
 
   setTimeout(
     () => $('nick-input').focus(),
@@ -862,9 +942,11 @@ function showNick() {
 
 function showGame() {
 
-  $('screen-nick').style.display = 'none';
+  $('screen-nick').style.display =
+    'none';
 
-  $('screen-game').style.display = 'block';
+  $('screen-game').style.display =
+    'block';
 
   $('screen-result')
     .classList.remove('show');
@@ -880,72 +962,83 @@ function showResult() {
 }
 
 
-/* ── 닉네임 ── */
+/* ══ 닉네임 ══ */
 
-$('nick-ok').addEventListener(
-  'click',
-  () => {
+$('nick-ok')
+  .addEventListener(
+    'click',
+    () => {
 
-    const v =
-      $('nick-input').value.trim();
-
-    if (!v) {
-
-      $('nick-input').focus();
-
-      return;
-
-    }
-
-    nickname = v;
-
-    $('nick-badge').textContent =
-      nickname;
-
-    showGame();
-
-    resetGame();
-
-  }
-);
+      const v =
+        $('nick-input').value.trim();
 
 
-$('nick-input').addEventListener(
-  'keydown',
-  e => {
+      if (!v) {
 
-    if (e.key === 'Enter') {
+        $('nick-input').focus();
 
-      $('nick-ok').click();
+        return;
+
+      }
+
+
+      nickname = v;
+
+      $('nick-badge')
+        .textContent = nickname;
+
+
+      showGame();
+
+      resetGame();
 
     }
-
-  }
-);
+  );
 
 
-/* ── 숫자 배열 만들기 ── */
+$('nick-input')
+  .addEventListener(
+    'keydown',
+    e => {
+
+      if (e.key === 'Enter') {
+
+        $('nick-ok').click();
+
+      }
+
+    }
+  );
+
+
+/* ══ 숫자 배열 만들기 ══ */
 
 function makeNumbers(start) {
 
   const numbers = [];
 
+
   for (let i = 0; i < 9; i++) {
 
-    numbers.push(start + i);
+    numbers.push(
+      start + i
+    );
 
   }
+
 
   return shuffle(numbers);
 
 }
 
 
-/* ── 그리드 초기화 ── */
+/* ══ 그리드 초기화 ══ */
 
 function buildGrid() {
 
-  const grid = $('grid');
+  const grid =
+    $('grid');
+
 
   grid.innerHTML = '';
 
@@ -953,53 +1046,62 @@ function buildGrid() {
 
 
   /*
-    처음에는 1~9를 랜덤으로 배치
+    현재 nextExp부터
+    9개의 숫자를 생성
   */
 
   const nums =
     makeNumbers(nextExp);
 
 
-  nums.forEach((n, idx) => {
+  nums.forEach(
+    (n, idx) => {
 
-    const d =
-      document.createElement('div');
-
-    d.className = 'card';
-
-    d.textContent = n;
+      const d =
+        document.createElement('div');
 
 
-    const tap = e => {
-
-      e.preventDefault();
-
-      onCard(idx);
-
-    };
+      d.className =
+        'card';
 
 
-    d.addEventListener(
-      'touchend',
-      tap,
-      { passive: false }
-    );
-
-    d.addEventListener(
-      'click',
-      tap
-    );
+      d.textContent =
+        n;
 
 
-    grid.appendChild(d);
+      const tap =
+        e => {
+
+          e.preventDefault();
+
+          onCard(idx);
+
+        };
 
 
-    cells.push({
-      el: d,
-      num: n
-    });
+      d.addEventListener(
+        'touchend',
+        tap,
+        { passive: false }
+      );
 
-  });
+
+      d.addEventListener(
+        'click',
+        tap
+      );
+
+
+      grid.appendChild(d);
+
+
+      cells.push({
+        el: d,
+        num: n
+      });
+
+    }
+  );
 
 
   updateActiveCard();
@@ -1007,11 +1109,13 @@ function buildGrid() {
 }
 
 
-/* ── 배열 섞기 ── */
+/* ══ 배열 섞기 ══ */
 
 function shuffle(a) {
 
-  const arr = [...a];
+  const arr =
+    [...a];
+
 
   for (
     let i = arr.length - 1;
@@ -1024,6 +1128,7 @@ function shuffle(a) {
         Math.random() * (i + 1)
       );
 
+
     [
       arr[i],
       arr[j]
@@ -1035,43 +1140,52 @@ function shuffle(a) {
 
   }
 
+
   return arr;
 
 }
 
 
-/* ── 활성 카드 표시 갱신 ── */
+/* ══ 활성 카드 표시 ══ */
 
 function updateActiveCard() {
 
   cells.forEach(c => {
 
     c.el.classList.remove(
-      'active',
-      'empty'
+      'active'
     );
 
 
     /*
-      이미 눌러서 사라진 카드
+      이미 사라진 카드
     */
 
     if (c.num === null) {
 
-      c.el.classList.add('empty');
+      c.el.classList.add(
+        'empty'
+      );
 
       return;
 
     }
 
 
+    c.el.classList.remove(
+      'empty'
+    );
+
+
     /*
-      다음에 눌러야 하는 숫자
+      현재 눌러야 하는 숫자
     */
 
     if (c.num === nextExp) {
 
-      c.el.classList.add('active');
+      c.el.classList.add(
+        'active'
+      );
 
     }
 
@@ -1084,34 +1198,58 @@ function updateActiveCard() {
 }
 
 
-/* ── 새로운 9개 숫자 생성 ── */
+/* ══ 새로운 9개 생성 ══ */
 
 function refillGrid() {
 
   /*
-    현재 nextExp부터
-    9개의 숫자를 생성
+    새로운 라운드로 이동
 
     예:
-    nextExp = 10
-    → 10~18
 
-    nextExp = 19
-    → 19~27
+    1라운드
+    1~9
+
+    ↓
+
+    2라운드
+    10~18
+
+    ↓
+
+    3라운드
+    19~27
   */
+
+  round++;
+
 
   const nums =
     makeNumbers(nextExp);
 
 
-  cells.forEach((cell, index) => {
+  cells.forEach(
+    (cell, index) => {
 
-    cell.num = nums[index];
+      cell.num =
+        nums[index];
 
-    cell.el.textContent =
-      nums[index];
+      cell.el.textContent =
+        nums[index];
 
-  });
+
+      /*
+        이전 정답/오답 효과 제거
+      */
+
+      cell.el.classList.remove(
+        'correct',
+        'wrong',
+        'empty'
+      );
+
+    }
+  );
 
 
   updateActiveCard();
@@ -1119,7 +1257,7 @@ function refillGrid() {
 }
 
 
-/* ── 카드 탭 ── */
+/* ══ 카드 탭 ══ */
 
 function onCard(idx) {
 
@@ -1133,7 +1271,7 @@ function onCard(idx) {
 
 
   /*
-    이미 사라진 카드라면 무시
+    이미 사라진 버튼
   */
 
   if (cell.num === null) {
@@ -1141,133 +1279,217 @@ function onCard(idx) {
   }
 
 
-  /*
-    틀린 숫자를 누른 경우
-  */
+  /* ══ 오답 ══ */
 
   if (cell.num !== nextExp) {
 
-    cell.el.classList.add('wrong');
+    /*
+      기존 효과 제거
+    */
+
+    cell.el.classList.remove(
+      'correct'
+    );
+
+
+    /*
+      붉은색 효과
+    */
+
+    cell.el.classList.remove(
+      'wrong'
+    );
+
+
+    /*
+      브라우저가 같은 클래스를
+      연속으로 다시 적용하도록
+      강제로 한 번 제거
+    */
+
+    void cell.el.offsetWidth;
+
+
+    cell.el.classList.add(
+      'wrong'
+    );
+
 
     setTimeout(
-      () =>
-        cell.el.classList.remove('wrong'),
+      () => {
+
+        cell.el.classList.remove(
+          'wrong'
+        );
+
+      },
       350
     );
+
 
     return;
 
   }
 
 
+  /* ══ 정답 ══ */
+
+
   /*
-    정답
+    이번 라운드의 점수를 추가
+
+    1라운드 → +1
+    2라운드 → +2
+    3라운드 → +3
+    ...
   */
 
-  score++;
+  score += round;
+
 
   $('score-disp').textContent =
     score;
 
 
   /*
-    정답을 누른 버튼을 제거
-
-    숫자를 null로 만들고
-    화면에서는 empty 처리
+    초록색 정답 효과
   */
 
-  cell.num = null;
+  cell.el.classList.remove(
+    'wrong'
+  );
 
-  cell.el.textContent = '';
-
-  cell.el.classList.remove('active');
-
-  cell.el.classList.add('empty');
+  cell.el.classList.add(
+    'correct'
+  );
 
 
   /*
-    다음 숫자로 이동
+    약간의 효과를 보여준 후
+    버튼을 사라지게 한다.
   */
 
-  nextExp++;
+  setTimeout(
+    () => {
+
+      /*
+        게임이 끝났거나
+        이미 다른 라운드로 넘어갔다면
+        무시
+      */
+
+      if (!gameActive) {
+        return;
+      }
 
 
-  /*
-    9개가 모두 사라졌는지 확인
-  */
+      cell.num = null;
 
-  const remaining =
-    cells.filter(
-      c => c.num !== null
-    ).length;
+      cell.el.textContent = '';
+
+      cell.el.classList.remove(
+        'active',
+        'correct'
+      );
+
+      cell.el.classList.add(
+        'empty'
+      );
 
 
-  /*
-    9개를 전부 눌렀다면
-    새로운 9개 숫자를 생성
-  */
+      /*
+        다음 숫자로 이동
+      */
 
-  if (remaining === 0) {
+      nextExp++;
 
-    refillGrid();
 
-  } else {
+      /*
+        아직 버튼이 남아 있는지 확인
+      */
 
-    /*
-      아직 같은 묶음에
-      숫자가 남아 있다면
-      배열을 절대 섞지 않는다.
+      const remaining =
+        cells.filter(
+          c => c.num !== null
+        ).length;
 
-      즉,
-      버튼을 하나 누를 때마다
-      위치는 그대로 유지된다.
-    */
 
-    updateActiveCard();
+      /*
+        9개를 전부 눌렀다면
+        새로운 라운드 시작
+      */
 
-  }
+      if (remaining === 0) {
+
+        refillGrid();
+
+      } else {
+
+        /*
+          중요:
+
+          여기서는 배열을
+          절대로 섞지 않는다.
+        */
+
+        updateActiveCard();
+
+      }
+
+    },
+    100
+  );
 
 }
 
 
-/* ── 타이머 ── */
+/* ══ 타이머 ══ */
 
 function startTimer() {
 
   timeLeft = 15;
 
+
   $('timer').textContent =
     timeLeft;
 
+
   $('timer')
-    .classList.remove('urgent');
+    .classList.remove(
+      'urgent'
+    );
 
 
   timerInt =
-    setInterval(() => {
+    setInterval(
+      () => {
 
-      timeLeft--;
-
-      $('timer').textContent =
-        timeLeft;
+        timeLeft--;
 
 
-      if (timeLeft <= 5) {
-
-        $('timer')
-          .classList.add('urgent');
-
-      }
+        $('timer').textContent =
+          timeLeft;
 
 
-      if (timeLeft <= 0) {
+        if (timeLeft <= 5) {
 
-        endGame();
+          $('timer')
+            .classList.add(
+              'urgent'
+            );
 
-      }
+        }
 
-    }, 1000);
+
+        if (timeLeft <= 0) {
+
+          endGame();
+
+        }
+
+      },
+      1000
+    );
 
 }
 
@@ -1281,15 +1503,18 @@ function stopTimer() {
 }
 
 
-/* ── 게임 리셋 ── */
+/* ══ 게임 리셋 ══ */
 
 function resetGame() {
 
   stopTimer();
 
+
   nextExp = 1;
 
   score = 0;
+
+  round = 1;
 
   gameActive = false;
 
@@ -1299,15 +1524,20 @@ function resetGame() {
   $('timer').textContent =
     '15';
 
+
   $('timer')
-    .classList.remove('urgent');
+    .classList.remove(
+      'urgent'
+    );
 
 
   $('score-disp').textContent =
     '0';
 
+
   $('next-num').textContent =
     '1';
+
 
   $('countdown').textContent =
     '';
@@ -1315,6 +1545,7 @@ function resetGame() {
 
   $('start-btn').style.display =
     'block';
+
 
   $('start-btn').disabled =
     false;
@@ -1325,12 +1556,13 @@ function resetGame() {
 }
 
 
-/* ── 게임 시작 ── */
+/* ══ 게임 시작 ══ */
 
 async function startGame() {
 
   $('start-btn').disabled =
     true;
+
 
   $('start-btn').style.display =
     'none';
@@ -1339,6 +1571,8 @@ async function startGame() {
   nextExp = 1;
 
   score = 0;
+
+  round = 1;
 
 
   $('score-disp').textContent =
@@ -1357,7 +1591,8 @@ async function startGame() {
     ['3', '2', '1', '시작!']
   ) {
 
-    cd.textContent = s;
+    cd.textContent =
+      s;
 
 
     await delay(
@@ -1369,7 +1604,8 @@ async function startGame() {
   }
 
 
-  cd.textContent = '';
+  cd.textContent =
+    '';
 
 
   gameActive = true;
@@ -1379,7 +1615,7 @@ async function startGame() {
 }
 
 
-/* ── 게임 종료 ── */
+/* ══ 게임 종료 ══ */
 
 async function endGame() {
 
@@ -1395,17 +1631,22 @@ async function endGame() {
   $('r-name').textContent =
     nickname;
 
+
   $('r-score').textContent =
     finalScore;
+
 
   $('r-rank').textContent =
     '';
 
+
   $('lb-rows').innerHTML =
     '';
 
+
   $('lb-loading').style.display =
     'block';
+
 
   $('lb-loading').textContent =
     '기록 저장 중...';
@@ -1445,6 +1686,7 @@ async function endGame() {
 
     console.error(e);
 
+
     $('lb-loading').textContent =
       '네트워크 오류 — 랭킹을 불러올 수 없습니다';
 
@@ -1453,7 +1695,7 @@ async function endGame() {
 }
 
 
-/* ── 랭킹 렌더링 ── */
+/* ══ 랭킹 ══ */
 
 function renderRanking(
   rows,
@@ -1477,6 +1719,7 @@ function renderRanking(
   const medals =
     ['🥇', '🥈', '🥉'];
 
+
   const rankClasses =
     ['gold', 'silver', 'bronze'];
 
@@ -1485,54 +1728,57 @@ function renderRanking(
 
 
   const html =
-    rows.map((r, i) => {
+    rows.map(
+      (r, i) => {
 
-      const isMe =
-        r.name === myName &&
-        r.score === myScore;
+        const isMe =
+          r.name === myName &&
+          r.score === myScore;
 
 
-      if (
-        isMe &&
-        myRank < 0
-      ) {
+        if (
+          isMe &&
+          myRank < 0
+        ) {
 
-        myRank = i + 1;
+          myRank =
+            i + 1;
+
+        }
+
+
+        const rankLabel =
+          i < 3
+            ? medals[i]
+            : (i + 1);
+
+
+        const rankCls =
+          i < 3
+            ? rankClasses[i]
+            : '';
+
+
+        return `
+          <div class="lb-row${isMe ? ' me' : ''}">
+
+            <span class="lb-rank ${rankCls}">
+              ${rankLabel}
+            </span>
+
+            <span class="lb-name">
+              ${r.name}
+            </span>
+
+            <span class="lb-score">
+              ${r.score}점
+            </span>
+
+          </div>
+        `;
 
       }
-
-
-      const rankLabel =
-        i < 3
-          ? medals[i]
-          : (i + 1);
-
-
-      const rankCls =
-        i < 3
-          ? rankClasses[i]
-          : '';
-
-
-      return `
-        <div class="lb-row${isMe ? ' me' : ''}">
-
-          <span class="lb-rank ${rankCls}">
-            ${rankLabel}
-          </span>
-
-          <span class="lb-name">
-            ${r.name}
-          </span>
-
-          <span class="lb-score">
-            ${r.score}개
-          </span>
-
-        </div>
-      `;
-
-    }).join('');
+    ).join('');
 
 
   $('lb-rows').innerHTML =
@@ -1554,7 +1800,7 @@ function renderRanking(
 }
 
 
-/* ── 버튼 이벤트 ── */
+/* ══ 버튼 이벤트 ══ */
 
 $('start-btn')
   .addEventListener(
@@ -1569,7 +1815,10 @@ $('btn-again')
     () => {
 
       $('screen-result')
-        .classList.remove('show');
+        .classList.remove(
+          'show'
+        );
+
 
       showGame();
 
