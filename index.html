@@ -1,71 +1,82 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no">
+
 <meta name="apple-mobile-web-app-capable" content="yes">
+
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
 <meta name="theme-color" content="#ffffff">
+
 <title>숫자 탭 게임</title>
 
+
 <style>
+
+/* ══════════════════════════════
+   기본
+══════════════════════════════ */
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
   -webkit-tap-highlight-color: transparent;
 }
 
+
 :root {
+
   --bg: #ffffff;
   --bg2: #f5f5f3;
   --bg3: #e8e8e5;
+
   --text: #1a1a1a;
   --text2: #666660;
+
   --border: rgba(0,0,0,0.13);
   --border2: rgba(0,0,0,0.22);
 
-  --active-bg: #eef4ff;
-  --active-border: #185fa5;
-  --active-text: #185fa5;
+  --info: #185fa5;
+  --danger: #e24b4a;
 
-  --done-bg: #eaf3de;
-  --done-border: rgba(59,109,17,0.3);
-  --done-text: #27500a;
-
+  /* 정답 */
   --correct-bg: #d9f5d0;
   --correct-border: #3b8f32;
   --correct-text: #24651f;
 
+  /* 오답 */
   --wrong-bg: #ffe0df;
   --wrong-border: #e24b4a;
   --wrong-text: #b42323;
-
-  --danger: #e24b4a;
-  --info: #185fa5;
-  --gold: #ba7517;
 
   --radius: 12px;
   --radius-sm: 8px;
 }
 
+
 @media (prefers-color-scheme: dark) {
+
   :root {
+
     --bg: #1c1c1e;
     --bg2: #2c2c2e;
     --bg3: #3a3a3c;
+
     --text: #f2f2f7;
     --text2: #8e8e93;
+
     --border: rgba(255,255,255,0.1);
     --border2: rgba(255,255,255,0.2);
 
-    --active-bg: #0c2a4a;
-    --active-border: #64a8f0;
-    --active-text: #64a8f0;
-
-    --done-bg: #173404;
-    --done-border: rgba(150,210,80,0.25);
-    --done-text: #c0dd97;
+    --info: #64a8f0;
+    --danger: #ff6b6b;
 
     --correct-bg: #1f4d24;
     --correct-border: #65b85c;
@@ -74,309 +85,466 @@
     --wrong-bg: #5a2020;
     --wrong-border: #ff6b6b;
     --wrong-text: #ffb0b0;
-
-    --danger: #ff6b6b;
-    --info: #64a8f0;
-    --gold: #f0a500;
   }
 }
 
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+
   background: var(--bg);
   color: var(--text);
+
   min-height: 100vh;
+
   overscroll-behavior: none;
 }
 
+
 #app {
+
   max-width: 420px;
+
   margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
+
+  padding:
+    1.5rem
+    1rem
+    3rem;
 }
 
+
+/* ══════════════════════════════
+   버튼
+══════════════════════════════ */
+
 .btn-primary {
+
   display: block;
+
   width: 100%;
+
   padding: 14px;
+
   font-size: 16px;
+
   font-weight: 600;
+
   border-radius: var(--radius-sm);
+
   border: none;
+
   background: var(--text);
+
   color: var(--bg);
+
   cursor: pointer;
+
   touch-action: manipulation;
 }
 
+
 .btn-primary:active {
+
   opacity: 0.75;
+
   transform: scale(0.98);
 }
 
+
 .btn-secondary {
+
   display: block;
+
   width: 100%;
+
   padding: 13px;
+
   font-size: 15px;
+
   font-weight: 500;
+
   border-radius: var(--radius-sm);
-  border: 0.5px solid var(--border2);
+
+  border:
+    0.5px solid var(--border2);
+
   background: var(--bg);
+
   color: var(--text);
+
   cursor: pointer;
+
   touch-action: manipulation;
 }
 
+
 .btn-secondary:active {
+
   background: var(--bg3);
 }
 
 
-/* ══ 화면 1: 닉네임 ══ */
+/* ══════════════════════════════
+   닉네임 화면
+══════════════════════════════ */
 
 #screen-nick {
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   padding-top: 3.5rem;
 }
 
+
 .game-title {
+
   font-size: 28px;
+
   font-weight: 700;
+
   margin-bottom: 6px;
+
   text-align: center;
 }
 
+
 .game-sub {
+
   font-size: 14px;
+
   color: var(--text2);
+
   margin-bottom: 2.5rem;
+
   text-align: center;
+
   line-height: 1.6;
 }
 
+
 #nick-input {
+
   width: 100%;
+
   max-width: 300px;
+
   font-size: 17px;
+
   padding: 12px 14px;
+
   margin-bottom: 14px;
+
   border-radius: var(--radius-sm);
-  border: 0.5px solid var(--border2);
+
+  border:
+    0.5px solid var(--border2);
+
   background: var(--bg);
+
   color: var(--text);
+
   outline: none;
+
   -webkit-appearance: none;
 }
 
+
 #nick-input:focus {
+
   border-color: var(--info);
-  box-shadow: 0 0 0 3px rgba(24,95,165,0.12);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(24,95,165,0.12);
 }
 
+
 #nick-ok {
+
   max-width: 300px;
 }
 
 
-/* ══ 화면 2: 게임 ══ */
+/* ══════════════════════════════
+   게임 화면
+══════════════════════════════ */
 
 #screen-game {
+
   display: none;
 }
 
+
 #header {
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
   margin-bottom: 1rem;
 }
 
+
 #nick-badge {
+
   flex: 1;
+
   font-size: 14px;
+
   color: var(--text2);
+
   font-weight: 500;
+
   white-space: nowrap;
+
   overflow: hidden;
+
   text-overflow: ellipsis;
 }
 
+
 #timer-wrap {
+
   display: flex;
+
   flex-direction: column;
+
   align-items: flex-end;
+
   flex-shrink: 0;
 }
 
+
 #timer {
+
   font-size: 32px;
+
   font-weight: 700;
+
   font-variant-numeric: tabular-nums;
+
   line-height: 1;
+
   color: var(--text);
 }
 
+
 #timer.urgent {
+
   color: var(--danger);
 }
 
+
 #timer-label {
+
   font-size: 11px;
+
   color: var(--text2);
+
   margin-top: 1px;
 }
 
+
+/* ══════════════════════════════
+   점수
+══════════════════════════════ */
+
 #score-wrap {
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   background: var(--bg2);
+
   border-radius: var(--radius-sm);
+
   padding: 10px 16px;
+
   margin-bottom: 1rem;
 }
 
+
 #score-wrap .s-label {
+
   font-size: 13px;
+
   color: var(--text2);
 }
 
+
 #score-wrap .s-val {
+
   font-size: 22px;
+
   font-weight: 700;
+
   font-variant-numeric: tabular-nums;
 }
 
+
 #next-hint {
+
   font-size: 13px;
+
   color: var(--text2);
 }
 
+
 #next-hint span {
-  color: var(--active-text);
+
+  color: var(--info);
+
   font-weight: 700;
+
   font-size: 16px;
 }
 
-#start-btn {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-  border: none;
-  background: var(--text);
-  color: var(--bg);
-  cursor: pointer;
-  touch-action: manipulation;
-  margin-bottom: 1rem;
-}
 
-#start-btn:active {
-  opacity: 0.75;
-}
-
-#start-btn:disabled {
-  opacity: 0.35;
-}
+/* ══════════════════════════════
+   카운트다운
+══════════════════════════════ */
 
 #countdown {
+
   height: 72px;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   font-size: 58px;
+
   font-weight: 700;
 }
 
+
+/* ══════════════════════════════
+   그리드
+══════════════════════════════ */
+
 #grid {
+
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
   gap: 10px;
+
   margin-bottom: 10px;
 }
 
+
+/* ══════════════════════════════
+   숫자 버튼
+══════════════════════════════ */
+
 .card {
+
   aspect-ratio: 1;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   font-size: 28px;
+
   font-weight: 700;
 
   border-radius: var(--radius);
-  border: 0.5px solid var(--border2);
+
+  border:
+    0.5px solid var(--border2);
 
   background: var(--bg);
+
   color: var(--text);
 
   user-select: none;
+
   -webkit-user-select: none;
 
   touch-action: manipulation;
-  cursor: default;
+
+  cursor: pointer;
 
   transition:
     transform 0.08s,
-    background 0.12s,
-    border-color 0.12s,
-    color 0.12s,
-    opacity 0.12s;
+    background 0.1s,
+    border-color 0.1s,
+    color 0.1s;
 }
 
 
-/* 정답을 누를 수 있는 버튼 */
+/* 현재 눌러야 하는 숫자 */
 
 .card.active {
-  background: var(--bg);
-  border-color: var(--border2);
-  color: var(--text);
+
   cursor: pointer;
 }
 
+
 .card.active:active {
+
   transform: scale(0.91);
 }
 
 
-/* ══ 정답 효과 ══ */
+/* ══════════════════════════════
+   정답 효과
+══════════════════════════════ */
 
 .card.correct {
+
   background: var(--correct-bg);
+
   border-color: var(--correct-border);
+
   color: var(--correct-text);
+
   transform: scale(0.93);
 }
 
 
-/* ══ 오답 효과 ══ */
+/* ══════════════════════════════
+   오답 효과
+══════════════════════════════ */
 
 .card.wrong {
+
   background: var(--wrong-bg);
+
   border-color: var(--wrong-border);
+
   color: var(--wrong-text);
-  animation: shake .35s;
+
+  animation:
+    shake 0.35s;
 }
 
-
-/* ══ 사라진 버튼 ══ */
-
-.card.empty {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-
-/* 오답 흔들림 */
 
 @keyframes shake {
-  0%,100% {
+
+  0%, 100% {
     transform: translateX(0);
   }
 
@@ -398,366 +566,573 @@ body {
 }
 
 
-/* ══ 화면 3: 결과 팝업 ══ */
+/* ══════════════════════════════
+   사라진 버튼
+══════════════════════════════ */
+
+.card.empty {
+
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+
+/* ══════════════════════════════
+   결과 화면
+══════════════════════════════ */
 
 #screen-result {
+
   display: none;
+
   position: fixed;
+
   inset: 0;
-  background: rgba(0,0,0,0.6);
+
+  background:
+    rgba(0,0,0,0.6);
+
   z-index: 200;
 
   align-items: flex-end;
+
   justify-content: center;
 }
 
+
 #screen-result.show {
+
   display: flex;
 }
 
+
 #result-sheet {
+
   background: var(--bg);
+
   width: 100%;
+
   max-width: 480px;
 
-  border-radius: 20px 20px 0 0;
+  border-radius:
+    20px
+    20px
+    0
+    0;
 
-  padding: 1.5rem 1.25rem 2.5rem;
+  padding:
+    1.5rem
+    1.25rem
+    2.5rem;
 
   max-height: 92vh;
+
   overflow-y: auto;
 
   -webkit-overflow-scrolling: touch;
 
-  animation: slideUp 0.25s ease;
+  animation:
+    slideUp 0.25s ease;
 }
 
+
 @keyframes slideUp {
+
   from {
-    transform: translateY(60px);
+
+    transform:
+      translateY(60px);
+
     opacity: 0;
   }
 
   to {
-    transform: translateY(0);
+
+    transform:
+      translateY(0);
+
     opacity: 1;
   }
 }
 
+
 .result-my {
+
   text-align: center;
+
   padding-bottom: 1.25rem;
-  border-bottom: 0.5px solid var(--border);
+
+  border-bottom:
+    0.5px solid var(--border);
+
   margin-bottom: 1.25rem;
 }
 
+
 .result-my .r-lbl {
+
   font-size: 12px;
+
   color: var(--text2);
+
   margin-bottom: 4px;
 }
 
+
 .result-my .r-name {
+
   font-size: 16px;
+
   font-weight: 600;
+
   margin-bottom: 6px;
 }
 
+
 .result-my .r-score {
+
   font-size: 52px;
+
   font-weight: 700;
+
   line-height: 1;
+
   margin-bottom: 4px;
 }
 
+
 .result-my .r-score-label {
+
   font-size: 13px;
+
   color: var(--text2);
+
   margin-bottom: 8px;
 }
 
+
 .result-my .r-rank {
+
   font-size: 14px;
+
   color: var(--text2);
 }
 
+
 .result-my .r-rank strong {
+
   color: var(--info);
+
   font-size: 20px;
 }
 
+
 .lb-header {
+
   font-size: 13px;
+
   font-weight: 600;
+
   color: var(--text2);
+
   text-align: center;
+
   margin-bottom: 0.75rem;
 }
 
+
 .lb-row {
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
 
   padding: 8px 4px;
 
-  border-bottom: 0.5px solid var(--border);
+  border-bottom:
+    0.5px solid var(--border);
 
   font-size: 15px;
 }
 
+
 .lb-row:last-child {
+
   border-bottom: none;
 }
 
+
 .lb-rank {
+
   width: 28px;
+
   text-align: center;
+
   font-weight: 700;
+
   color: var(--text2);
+
   flex-shrink: 0;
+
   font-size: 14px;
 }
 
-.lb-rank.gold {
-  font-size: 20px;
-}
 
-.lb-rank.silver {
-  font-size: 20px;
-}
-
+.lb-rank.gold,
+.lb-rank.silver,
 .lb-rank.bronze {
+
   font-size: 20px;
 }
+
 
 .lb-name {
+
   flex: 1;
+
   color: var(--text);
+
   overflow: hidden;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 }
 
+
 .lb-score {
+
   font-weight: 700;
+
   color: var(--text);
+
   min-width: 48px;
+
   text-align: right;
 }
 
+
 .lb-row.me {
-  background: rgba(24,95,165,0.07);
+
+  background:
+    rgba(24,95,165,0.07);
+
   border-radius: 8px;
-  margin: 2px -4px;
-  padding: 8px 8px;
+
+  margin:
+    2px -4px;
+
+  padding:
+    8px;
 }
+
 
 .lb-row.me .lb-name,
 .lb-row.me .lb-score {
+
   color: var(--info);
 }
+
 
 .lb-row.me .lb-rank {
+
   color: var(--info);
 }
 
+
 #lb-loading {
+
   text-align: center;
+
   padding: 1.5rem 0;
+
   font-size: 14px;
+
   color: var(--text2);
 }
 
+
 .result-actions {
+
   display: flex;
+
   flex-direction: column;
+
   gap: 10px;
+
   margin-top: 1.5rem;
 }
 
+
 #credit {
+
   position: fixed;
+
   bottom: 14px;
+
   right: 16px;
 
   font-size: 11px;
+
   color: var(--text2);
 
   opacity: 0.6;
 
   pointer-events: none;
+
   z-index: 10;
 }
+
 </style>
 </head>
 
 
 <body>
 
+
 <div id="app">
 
-  <!-- ══ 화면 1: 닉네임 ══ -->
 
-  <div id="screen-nick">
+<!-- ══════════════════════════════
+     닉네임 화면
+══════════════════════════════ -->
 
-    <div class="game-title">
-      숫자 탭 게임
-    </div>
+<div id="screen-nick">
 
-    <div class="game-sub">
-      15초 안에 최대한 많은 숫자를<br>
-      순서대로 눌러보세요
-    </div>
+  <div class="game-title">
+    숫자 탭 게임
+  </div>
 
-    <input
-      id="nick-input"
-      type="text"
-      maxlength="12"
-      placeholder="닉네임 입력 (최대 12자)"
-      autocomplete="off"
-      autocorrect="off"
-      spellcheck="false"
-    />
 
-    <button id="nick-ok" class="btn-primary">
-      시작하기
-    </button>
+  <div class="game-sub">
+
+    15초 안에 최대한 많은 숫자를<br>
+
+    순서대로 눌러보세요
 
   </div>
 
 
-  <!-- ══ 화면 2: 게임 ══ -->
-
-  <div id="screen-game">
-
-    <div id="header">
-
-      <span id="nick-badge"></span>
-
-      <div id="timer-wrap">
-
-        <div id="timer">
-          15
-        </div>
-
-        <div id="timer-label">
-          남은 시간
-        </div>
-
-      </div>
-
-    </div>
+  <input
+    id="nick-input"
+    type="text"
+    maxlength="12"
+    placeholder="닉네임 입력 (최대 12자)"
+    autocomplete="off"
+    autocorrect="off"
+    spellcheck="false"
+  />
 
 
-    <div id="score-wrap">
+  <button
+    id="nick-ok"
+    class="btn-primary">
 
-      <div>
+    시작하기
 
-        <div class="s-label">
-          현재 점수
-        </div>
-
-        <div class="s-val" id="score-disp">
-          0
-        </div>
-
-      </div>
-
-
-      <div id="next-hint">
-
-        다음 숫자
-        <span id="next-num">1</span>
-
-      </div>
-
-    </div>
-
-
-    <button id="start-btn">
-      시작
-    </button>
-
-
-    <div id="countdown"></div>
-
-    <div id="grid"></div>
-
-  </div>
+  </button>
 
 </div>
 
 
-<!-- ══ 화면 3: 결과 팝업 ══ -->
+
+<!-- ══════════════════════════════
+     게임 화면
+══════════════════════════════ -->
+
+<div id="screen-game">
+
+
+  <div id="header">
+
+    <span id="nick-badge"></span>
+
+
+    <div id="timer-wrap">
+
+      <div id="timer">
+        15
+      </div>
+
+      <div id="timer-label">
+        남은 시간
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div id="score-wrap">
+
+
+    <div>
+
+      <div class="s-label">
+        현재 점수
+      </div>
+
+
+      <div
+        class="s-val"
+        id="score-disp">
+
+        0
+
+      </div>
+
+    </div>
+
+
+
+    <div id="next-hint">
+
+      다음 숫자
+
+      <span id="next-num">
+        1
+      </span>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- 시작 버튼 없음 -->
+
+  <div id="countdown"></div>
+
+
+  <div id="grid"></div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- ══════════════════════════════
+     결과 팝업
+══════════════════════════════ -->
 
 <div id="screen-result">
 
+
   <div id="result-sheet">
 
+
     <div class="result-my">
+
 
       <div class="r-lbl">
         최종 점수
       </div>
 
-      <div class="r-name" id="r-name"></div>
 
-      <div class="r-score" id="r-score">
-        0
+      <div
+        class="r-name"
+        id="r-name">
       </div>
+
+
+      <div
+        class="r-score"
+        id="r-score">
+
+        0
+
+      </div>
+
 
       <div class="r-score-label">
         점
       </div>
 
-      <div class="r-rank" id="r-rank"></div>
+
+      <div
+        class="r-rank"
+        id="r-rank">
+      </div>
+
 
     </div>
+
 
 
     <div class="lb-header">
       랭킹 TOP 10
     </div>
 
+
     <div id="lb-loading">
       불러오는 중...
     </div>
 
+
     <div id="lb-rows"></div>
+
 
 
     <div class="result-actions">
 
-      <button id="btn-again" class="btn-primary">
+
+      <button
+        id="btn-again"
+        class="btn-primary">
+
         같은 닉네임으로 다시 도전
+
       </button>
 
-      <button id="btn-new" class="btn-secondary">
+
+      <button
+        id="btn-new"
+        class="btn-secondary">
+
         닉네임 변경 후 다시 시작
+
       </button>
+
 
     </div>
+
 
   </div>
 
 </div>
 
 
-<!-- ══ Firebase SDK ══ -->
+
+<!-- ══════════════════════════════
+     Firebase
+══════════════════════════════ -->
 
 <script type="module">
 
 import {
   initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+}
+from
+  "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 import {
   getDatabase,
   ref,
   push,
   get
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+}
+from
+  "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 
 const firebaseConfig = {
@@ -782,14 +1157,17 @@ const firebaseConfig = {
 
   appId:
     "1:209419310847:web:916c8f6fc0a730b8191eca"
+
 };
 
 
 const app =
   initializeApp(firebaseConfig);
 
+
 const db =
   getDatabase(app);
+
 
 
 window.fbSave =
@@ -798,8 +1176,8 @@ window.fbSave =
     await push(
       ref(db, 'scores'),
       {
-        name,
-        score,
+        name: name,
+        score: score,
         t: Date.now()
       }
     );
@@ -807,25 +1185,28 @@ window.fbSave =
   };
 
 
+
 window.fbLoadTop10 =
   async () => {
 
     const snap =
-      await get(ref(db, 'scores'));
+      await get(
+        ref(db, 'scores')
+      );
 
 
     if (!snap.exists()) {
+
       return [];
+
     }
 
 
     const rows =
-      Object.values(snap.val());
+      Object.values(
+        snap.val()
+      );
 
-
-    /*
-      닉네임당 최고 기록만 남기기
-    */
 
     const best = {};
 
@@ -845,9 +1226,12 @@ window.fbLoadTop10 =
 
 
     return Object.values(best)
+
       .sort(
-        (a, b) => b.score - a.score
+        (a, b) =>
+          b.score - a.score
       )
+
       .slice(0, 10);
 
   };
@@ -855,28 +1239,33 @@ window.fbLoadTop10 =
 </script>
 
 
+
 <script>
 
-/* ══ 기본 변수 ══ */
+/* ══════════════════════════════
+   기본 변수
+══════════════════════════════ */
 
 const $ =
-  id => document.getElementById(id);
+  id =>
+    document.getElementById(id);
 
 
 let nickname = '';
+
 
 let cells = [];
 
 
 /*
-  다음에 눌러야 하는 숫자
+  현재 눌러야 하는 숫자
 */
 
 let nextExp = 1;
 
 
 /*
-  총 점수
+  현재 총점
 */
 
 let score = 0;
@@ -885,9 +1274,9 @@ let score = 0;
 /*
   현재 라운드
 
-  1라운드 = 1점
-  2라운드 = 2점
-  3라운드 = 3점
+  1라운드 → 1점
+  2라운드 → 2점
+  3라운드 → 3점
   ...
 */
 
@@ -900,40 +1289,70 @@ let round = 1;
 
 let timeLeft = 15;
 
+
 let timerInt = null;
+
+
+/*
+  게임 진행 여부
+*/
 
 let gameActive = false;
 
 
-/* ══ 유틸 ══ */
+/*
+  카운트다운 진행 중인지
+*/
+
+let countdownRunning = false;
+
+
+/* ══════════════════════════════
+   유틸
+══════════════════════════════ */
 
 function delay(ms) {
 
   return new Promise(
-    r => setTimeout(r, ms)
+    resolve =>
+      setTimeout(resolve, ms)
   );
 
 }
 
 
-/* ══ 화면 전환 ══ */
+/* ══════════════════════════════
+   화면 전환
+══════════════════════════════ */
 
 function showNick() {
+
+  stopTimer();
+
+
+  gameActive = false;
+
+  countdownRunning = false;
+
 
   $('screen-nick').style.display =
     'flex';
 
+
   $('screen-game').style.display =
     'none';
 
+
   $('screen-result')
     .classList.remove('show');
+
 
   $('nick-input').value = '';
 
 
   setTimeout(
-    () => $('nick-input').focus(),
+    () =>
+      $('nick-input').focus(),
     100
   );
 
@@ -945,8 +1364,10 @@ function showGame() {
   $('screen-nick').style.display =
     'none';
 
+
   $('screen-game').style.display =
     'block';
+
 
   $('screen-result')
     .classList.remove('show');
@@ -962,37 +1383,61 @@ function showResult() {
 }
 
 
-/* ══ 닉네임 ══ */
+/* ══════════════════════════════
+   닉네임 입력
+══════════════════════════════ */
+
+function enterNickname() {
+
+  const v =
+    $('nick-input')
+      .value
+      .trim();
+
+
+  if (!v) {
+
+    $('nick-input').focus();
+
+    return;
+
+  }
+
+
+  nickname = v;
+
+
+  $('nick-badge')
+    .textContent =
+      nickname;
+
+
+  /*
+    게임 화면으로 이동
+  */
+
+  showGame();
+
+
+  /*
+    바로 게임 준비
+
+    버튼을 누를 필요 없이
+    자동으로 startGame 실행
+  */
+
+  resetGame();
+
+
+  startGame();
+
+}
+
 
 $('nick-ok')
   .addEventListener(
     'click',
-    () => {
-
-      const v =
-        $('nick-input').value.trim();
-
-
-      if (!v) {
-
-        $('nick-input').focus();
-
-        return;
-
-      }
-
-
-      nickname = v;
-
-      $('nick-badge')
-        .textContent = nickname;
-
-
-      showGame();
-
-      resetGame();
-
-    }
+    enterNickname
   );
 
 
@@ -1003,7 +1448,7 @@ $('nick-input')
 
       if (e.key === 'Enter') {
 
-        $('nick-ok').click();
+        enterNickname();
 
       }
 
@@ -1011,14 +1456,20 @@ $('nick-input')
   );
 
 
-/* ══ 숫자 배열 만들기 ══ */
+/* ══════════════════════════════
+   숫자 배열
+══════════════════════════════ */
 
 function makeNumbers(start) {
 
   const numbers = [];
 
 
-  for (let i = 0; i < 9; i++) {
+  for (
+    let i = 0;
+    i < 9;
+    i++
+  ) {
 
     numbers.push(
       start + i
@@ -1032,7 +1483,9 @@ function makeNumbers(start) {
 }
 
 
-/* ══ 그리드 초기화 ══ */
+/* ══════════════════════════════
+   그리드 생성
+══════════════════════════════ */
 
 function buildGrid() {
 
@@ -1042,12 +1495,13 @@ function buildGrid() {
 
   grid.innerHTML = '';
 
+
   cells = [];
 
 
   /*
-    현재 nextExp부터
-    9개의 숫자를 생성
+    현재 숫자부터
+    9개 생성
   */
 
   const nums =
@@ -1069,26 +1523,26 @@ function buildGrid() {
         n;
 
 
-      const tap =
+      /*
+        중요:
+
+        touchend + click을
+        동시에 사용하지 않는다.
+
+        pointerup 하나만 사용해서
+        모바일에서 한 번 터치한 것이
+        두 번 처리되는 문제를 방지한다.
+      */
+
+      d.addEventListener(
+        'pointerup',
         e => {
 
           e.preventDefault();
 
           onCard(idx);
 
-        };
-
-
-      d.addEventListener(
-        'touchend',
-        tap,
-        { passive: false }
-      );
-
-
-      d.addEventListener(
-        'click',
-        tap
+        }
       );
 
 
@@ -1096,8 +1550,11 @@ function buildGrid() {
 
 
       cells.push({
+
         el: d,
+
         num: n
+
       });
 
     }
@@ -1109,12 +1566,14 @@ function buildGrid() {
 }
 
 
-/* ══ 배열 섞기 ══ */
+/* ══════════════════════════════
+   배열 섞기
+══════════════════════════════ */
 
-function shuffle(a) {
+function shuffle(array) {
 
   const arr =
-    [...a];
+    [...array];
 
 
   for (
@@ -1125,7 +1584,8 @@ function shuffle(a) {
 
     const j =
       Math.floor(
-        Math.random() * (i + 1)
+        Math.random() *
+        (i + 1)
       );
 
 
@@ -1146,24 +1606,28 @@ function shuffle(a) {
 }
 
 
-/* ══ 활성 카드 표시 ══ */
+/* ══════════════════════════════
+   활성 카드 표시
+══════════════════════════════ */
 
 function updateActiveCard() {
 
-  cells.forEach(c => {
+  cells.forEach(cell => {
 
-    c.el.classList.remove(
+    cell.el.classList.remove(
       'active'
     );
 
 
     /*
-      이미 사라진 카드
+      사라진 버튼
     */
 
-    if (c.num === null) {
+    if (
+      cell.num === null
+    ) {
 
-      c.el.classList.add(
+      cell.el.classList.add(
         'empty'
       );
 
@@ -1172,7 +1636,7 @@ function updateActiveCard() {
     }
 
 
-    c.el.classList.remove(
+    cell.el.classList.remove(
       'empty'
     );
 
@@ -1181,9 +1645,11 @@ function updateActiveCard() {
       현재 눌러야 하는 숫자
     */
 
-    if (c.num === nextExp) {
+    if (
+      cell.num === nextExp
+    ) {
 
-      c.el.classList.add(
+      cell.el.classList.add(
         'active'
       );
 
@@ -1192,37 +1658,43 @@ function updateActiveCard() {
   });
 
 
-  $('next-num').textContent =
-    nextExp;
+  $('next-num')
+    .textContent =
+      nextExp;
 
 }
 
 
-/* ══ 새로운 9개 생성 ══ */
+/* ══════════════════════════════
+   다음 라운드
+══════════════════════════════ */
 
 function refillGrid() {
 
   /*
-    새로운 라운드로 이동
+    라운드 증가
 
-    예:
-
-    1라운드
-    1~9
-
-    ↓
-
-    2라운드
-    10~18
-
-    ↓
-
-    3라운드
-    19~27
+    1 → 2
+    2 → 3
+    3 → 4
+    ...
   */
 
   round++;
 
+
+  /*
+    현재 nextExp부터
+    새로운 숫자 9개 생성
+
+    예:
+
+    1~9
+    ↓
+    10~18
+    ↓
+    19~27
+  */
 
   const nums =
     makeNumbers(nextExp);
@@ -1234,12 +1706,13 @@ function refillGrid() {
       cell.num =
         nums[index];
 
+
       cell.el.textContent =
         nums[index];
 
 
       /*
-        이전 정답/오답 효과 제거
+        이전 효과 제거
       */
 
       cell.el.classList.remove(
@@ -1257,12 +1730,20 @@ function refillGrid() {
 }
 
 
-/* ══ 카드 탭 ══ */
+/* ══════════════════════════════
+   카드 입력
+══════════════════════════════ */
 
 function onCard(idx) {
 
+  /*
+    게임 중이 아니면 무시
+  */
+
   if (!gameActive) {
+
     return;
+
   }
 
 
@@ -1271,29 +1752,28 @@ function onCard(idx) {
 
 
   /*
-    이미 사라진 버튼
+    이미 사라진 버튼이면 무시
   */
 
-  if (cell.num === null) {
+  if (
+    cell.num === null
+  ) {
+
     return;
+
   }
 
 
-  /* ══ 오답 ══ */
+  /* ══════════════════════
+     오답
+  ══════════════════════ */
 
-  if (cell.num !== nextExp) {
-
-    /*
-      기존 효과 제거
-    */
-
-    cell.el.classList.remove(
-      'correct'
-    );
-
+  if (
+    cell.num !== nextExp
+  ) {
 
     /*
-      붉은색 효과
+      기존 애니메이션 제거
     */
 
     cell.el.classList.remove(
@@ -1302,13 +1782,16 @@ function onCard(idx) {
 
 
     /*
-      브라우저가 같은 클래스를
-      연속으로 다시 적용하도록
-      강제로 한 번 제거
+      강제로 다시 렌더링해서
+      연속 오답도 매번 효과 발생
     */
 
     void cell.el.offsetWidth;
 
+
+    /*
+      붉은색 + 흔들림
+    */
 
     cell.el.classList.add(
       'wrong'
@@ -1332,32 +1815,34 @@ function onCard(idx) {
   }
 
 
-  /* ══ 정답 ══ */
-
+  /* ══════════════════════
+     정답
+  ══════════════════════ */
 
   /*
-    이번 라운드의 점수를 추가
+    이번 라운드의 점수 추가
 
     1라운드 → +1
     2라운드 → +2
     3라운드 → +3
-    ...
   */
 
   score += round;
 
 
-  $('score-disp').textContent =
-    score;
+  $('score-disp')
+    .textContent =
+      score;
 
 
   /*
-    초록색 정답 효과
+    초록색 표시
   */
 
   cell.el.classList.remove(
     'wrong'
   );
+
 
   cell.el.classList.add(
     'correct'
@@ -1365,32 +1850,41 @@ function onCard(idx) {
 
 
   /*
-    약간의 효과를 보여준 후
-    버튼을 사라지게 한다.
+    버튼을 즉시 제거한다.
+
+    색상 효과가 보이도록
+    아주 짧은 시간 후 제거.
   */
 
   setTimeout(
     () => {
 
       /*
-        게임이 끝났거나
-        이미 다른 라운드로 넘어갔다면
-        무시
+        이미 게임이 끝났다면
+        더 이상 처리하지 않음
       */
 
       if (!gameActive) {
+
         return;
+
       }
 
+
+      /*
+        버튼 제거
+      */
 
       cell.num = null;
 
       cell.el.textContent = '';
 
+
       cell.el.classList.remove(
         'active',
         'correct'
       );
+
 
       cell.el.classList.add(
         'empty'
@@ -1398,38 +1892,41 @@ function onCard(idx) {
 
 
       /*
-        다음 숫자로 이동
+        다음 숫자
       */
 
       nextExp++;
 
 
       /*
-        아직 버튼이 남아 있는지 확인
+        남은 버튼 수
       */
 
       const remaining =
         cells.filter(
-          c => c.num !== null
+          c =>
+            c.num !== null
         ).length;
 
 
       /*
-        9개를 전부 눌렀다면
-        새로운 라운드 시작
+        9개를 모두 눌렀으면
+        새로운 판 생성
       */
 
-      if (remaining === 0) {
+      if (
+        remaining === 0
+      ) {
 
         refillGrid();
 
-      } else {
+      }
+
+      else {
 
         /*
-          중요:
-
-          여기서는 배열을
-          절대로 섞지 않는다.
+          같은 판에서는
+          절대로 위치를 섞지 않는다.
         */
 
         updateActiveCard();
@@ -1443,15 +1940,18 @@ function onCard(idx) {
 }
 
 
-/* ══ 타이머 ══ */
+/* ══════════════════════════════
+   타이머
+══════════════════════════════ */
 
 function startTimer() {
 
   timeLeft = 15;
 
 
-  $('timer').textContent =
-    timeLeft;
+  $('timer')
+    .textContent =
+      timeLeft;
 
 
   $('timer')
@@ -1467,11 +1967,14 @@ function startTimer() {
         timeLeft--;
 
 
-        $('timer').textContent =
-          timeLeft;
+        $('timer')
+          .textContent =
+            timeLeft;
 
 
-        if (timeLeft <= 5) {
+        if (
+          timeLeft <= 5
+        ) {
 
           $('timer')
             .classList.add(
@@ -1481,7 +1984,9 @@ function startTimer() {
         }
 
 
-        if (timeLeft <= 0) {
+        if (
+          timeLeft <= 0
+        ) {
 
           endGame();
 
@@ -1496,18 +2001,33 @@ function startTimer() {
 
 function stopTimer() {
 
-  clearInterval(timerInt);
+  if (
+    timerInt !== null
+  ) {
 
-  timerInt = null;
+    clearInterval(
+      timerInt
+    );
+
+    timerInt = null;
+
+  }
 
 }
 
 
-/* ══ 게임 리셋 ══ */
+/* ══════════════════════════════
+   리셋
+══════════════════════════════ */
 
 function resetGame() {
 
   stopTimer();
+
+
+  gameActive = false;
+
+  countdownRunning = false;
 
 
   nextExp = 1;
@@ -1516,13 +2036,12 @@ function resetGame() {
 
   round = 1;
 
-  gameActive = false;
-
   timeLeft = 15;
 
 
-  $('timer').textContent =
-    '15';
+  $('timer')
+    .textContent =
+      '15';
 
 
   $('timer')
@@ -1531,24 +2050,19 @@ function resetGame() {
     );
 
 
-  $('score-disp').textContent =
-    '0';
+  $('score-disp')
+    .textContent =
+      '0';
 
 
-  $('next-num').textContent =
-    '1';
+  $('next-num')
+    .textContent =
+      '1';
 
 
-  $('countdown').textContent =
-    '';
-
-
-  $('start-btn').style.display =
-    'block';
-
-
-  $('start-btn').disabled =
-    false;
+  $('countdown')
+    .textContent =
+      '';
 
 
   buildGrid();
@@ -1556,17 +2070,33 @@ function resetGame() {
 }
 
 
-/* ══ 게임 시작 ══ */
+/* ══════════════════════════════
+   게임 자동 시작
+══════════════════════════════ */
 
 async function startGame() {
 
-  $('start-btn').disabled =
-    true;
+  /*
+    중복 실행 방지
+  */
+
+  if (
+    countdownRunning
+  ) {
+
+    return;
+
+  }
 
 
-  $('start-btn').style.display =
-    'none';
+  countdownRunning = true;
 
+  gameActive = false;
+
+
+  /*
+    게임판 초기화
+  */
 
   nextExp = 1;
 
@@ -1575,28 +2105,41 @@ async function startGame() {
   round = 1;
 
 
-  $('score-disp').textContent =
-    '0';
+  $('score-disp')
+    .textContent =
+      '0';
 
 
   buildGrid();
 
 
+  /*
+    카운트다운
+
+    3
+    2
+    1
+    시작!
+  */
+
   const cd =
     $('countdown');
 
 
+  const sequence =
+    ['3', '2', '1', '시작!'];
+
+
   for (
-    const s of
-    ['3', '2', '1', '시작!']
+    const text of sequence
   ) {
 
     cd.textContent =
-      s;
+      text;
 
 
     await delay(
-      s === '시작!'
+      text === '시작!'
         ? 700
         : 820
     );
@@ -1608,52 +2151,92 @@ async function startGame() {
     '';
 
 
+  /*
+    실제 게임 시작
+  */
+
   gameActive = true;
+
+  countdownRunning = false;
+
 
   startTimer();
 
 }
 
 
-/* ══ 게임 종료 ══ */
+/* ══════════════════════════════
+   게임 종료
+══════════════════════════════ */
 
 async function endGame() {
 
+  /*
+    중복 종료 방지
+  */
+
+  if (
+    !gameActive
+  ) {
+
+    return;
+
+  }
+
+
   stopTimer();
 
+
   gameActive = false;
+
+
+  countdownRunning = false;
 
 
   const finalScore =
     score;
 
 
-  $('r-name').textContent =
-    nickname;
+  /*
+    결과 화면
+  */
+
+  $('r-name')
+    .textContent =
+      nickname;
 
 
-  $('r-score').textContent =
-    finalScore;
+  $('r-score')
+    .textContent =
+      finalScore;
 
 
-  $('r-rank').textContent =
-    '';
+  $('r-rank')
+    .textContent =
+      '';
 
 
-  $('lb-rows').innerHTML =
-    '';
+  $('lb-rows')
+    .innerHTML =
+      '';
 
 
-  $('lb-loading').style.display =
-    'block';
+  $('lb-loading')
+    .style.display =
+      'block';
 
 
-  $('lb-loading').textContent =
-    '기록 저장 중...';
+  $('lb-loading')
+    .textContent =
+      '기록 저장 중...';
 
 
   showResult();
 
+
+  /*
+    Firebase 저장
+  */
 
   try {
 
@@ -1663,16 +2246,18 @@ async function endGame() {
     );
 
 
-    $('lb-loading').textContent =
-      '랭킹 불러오는 중...';
+    $('lb-loading')
+      .textContent =
+        '랭킹 불러오는 중...';
 
 
     const top10 =
       await window.fbLoadTop10();
 
 
-    $('lb-loading').style.display =
-      'none';
+    $('lb-loading')
+      .style.display =
+        'none';
 
 
     renderRanking(
@@ -1682,20 +2267,25 @@ async function endGame() {
     );
 
 
-  } catch(e) {
+  }
+
+  catch (e) {
 
     console.error(e);
 
 
-    $('lb-loading').textContent =
-      '네트워크 오류 — 랭킹을 불러올 수 없습니다';
+    $('lb-loading')
+      .textContent =
+        '네트워크 오류 — 랭킹을 불러올 수 없습니다';
 
   }
 
 }
 
 
-/* ══ 랭킹 ══ */
+/* ══════════════════════════════
+   랭킹
+══════════════════════════════ */
 
 function renderRanking(
   rows,
@@ -1708,8 +2298,9 @@ function renderRanking(
     rows.length === 0
   ) {
 
-    $('lb-rows').innerHTML =
-      '<div style="text-align:center;padding:1rem;color:var(--text2);font-size:14px;">아직 기록이 없습니다</div>';
+    $('lb-rows')
+      .innerHTML =
+        '<div style="text-align:center;padding:1rem;color:var(--text2);font-size:14px;">아직 기록이 없습니다</div>';
 
     return;
 
@@ -1717,97 +2308,111 @@ function renderRanking(
 
 
   const medals =
-    ['🥇', '🥈', '🥉'];
+    [
+      '🥇',
+      '🥈',
+      '🥉'
+    ];
 
 
   const rankClasses =
-    ['gold', 'silver', 'bronze'];
+    [
+      'gold',
+      'silver',
+      'bronze'
+    ];
 
 
   let myRank = -1;
 
 
   const html =
-    rows.map(
-      (r, i) => {
+    rows
+      .map(
+        (r, i) => {
 
-        const isMe =
-          r.name === myName &&
-          r.score === myScore;
+          const isMe =
+            r.name === myName &&
+            r.score === myScore;
 
 
-        if (
-          isMe &&
-          myRank < 0
-        ) {
+          if (
+            isMe &&
+            myRank < 0
+          ) {
 
-          myRank =
-            i + 1;
+            myRank =
+              i + 1;
+
+          }
+
+
+          const rankLabel =
+            i < 3
+              ? medals[i]
+              : i + 1;
+
+
+          const rankCls =
+            i < 3
+              ? rankClasses[i]
+              : '';
+
+
+          return `
+
+            <div class="lb-row${isMe ? ' me' : ''}">
+
+              <span class="lb-rank ${rankCls}">
+                ${rankLabel}
+              </span>
+
+              <span class="lb-name">
+                ${r.name}
+              </span>
+
+              <span class="lb-score">
+                ${r.score}점
+              </span>
+
+            </div>
+
+          `;
 
         }
+      )
+      .join('');
 
 
-        const rankLabel =
-          i < 3
-            ? medals[i]
-            : (i + 1);
+  $('lb-rows')
+    .innerHTML =
+      html;
 
 
-        const rankCls =
-          i < 3
-            ? rankClasses[i]
-            : '';
+  if (
+    myRank > 0
+  ) {
 
+    $('r-rank')
+      .innerHTML =
+        `<strong>${myRank}위</strong> / ${rows.length}명`;
 
-        return `
-          <div class="lb-row${isMe ? ' me' : ''}">
+  }
 
-            <span class="lb-rank ${rankCls}">
-              ${rankLabel}
-            </span>
+  else {
 
-            <span class="lb-name">
-              ${r.name}
-            </span>
-
-            <span class="lb-score">
-              ${r.score}점
-            </span>
-
-          </div>
-        `;
-
-      }
-    ).join('');
-
-
-  $('lb-rows').innerHTML =
-    html;
-
-
-  if (myRank > 0) {
-
-    $('r-rank').innerHTML =
-      `<strong>${myRank}위</strong> / ${rows.length}명`;
-
-  } else {
-
-    $('r-rank').innerHTML =
-      `10위권 밖`;
+    $('r-rank')
+      .innerHTML =
+        `10위권 밖`;
 
   }
 
 }
 
 
-/* ══ 버튼 이벤트 ══ */
-
-$('start-btn')
-  .addEventListener(
-    'click',
-    startGame
-  );
-
+/* ══════════════════════════════
+   다시 도전
+══════════════════════════════ */
 
 $('btn-again')
   .addEventListener(
@@ -1822,11 +2427,23 @@ $('btn-again')
 
       showGame();
 
+
       resetGame();
+
+
+      /*
+        다시 도전도 자동 시작
+      */
+
+      startGame();
 
     }
   );
 
+
+/* ══════════════════════════════
+   닉네임 변경
+══════════════════════════════ */
 
 $('btn-new')
   .addEventListener(
@@ -1845,5 +2462,6 @@ $('btn-new')
   제작: 2026KISHYONGT
 </div>
 
+
 </body>
-  </html>
+</html>
