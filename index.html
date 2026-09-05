@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 
 <meta charset="UTF-8">
@@ -18,43 +19,69 @@
 
 <style>
 
+/* ══════════════════════════════
+   기본
+══════════════════════════════ */
+
 *, *::before, *::after {
+
   box-sizing: border-box;
+
   margin: 0;
+
   padding: 0;
+
   -webkit-tap-highlight-color: transparent;
+
 }
 
 
 :root {
 
   --bg: #ffffff;
+
   --bg2: #f5f5f3;
+
   --bg3: #e8e8e5;
 
   --text: #1a1a1a;
+
   --text2: #666660;
 
   --border: rgba(0,0,0,0.13);
+
   --border2: rgba(0,0,0,0.22);
 
   --info: #185fa5;
+
   --danger: #e24b4a;
 
+
   --correct-bg: #d9f5d0;
+
   --correct-border: #3b8f32;
+
   --correct-text: #24651f;
 
+
   --wrong-bg: #ffe0df;
+
   --wrong-border: #e24b4a;
+
   --wrong-text: #b42323;
 
+
   --bonus-bg: #fff1c7;
+
   --bonus-border: #d89b20;
+
   --bonus-text: #9a6500;
 
+
   --radius: 12px;
+
   --radius-sm: 8px;
+
 }
 
 
@@ -63,30 +90,46 @@
   :root {
 
     --bg: #1c1c1e;
+
     --bg2: #2c2c2e;
+
     --bg3: #3a3a3c;
 
     --text: #f2f2f7;
+
     --text2: #8e8e93;
 
     --border: rgba(255,255,255,0.1);
+
     --border2: rgba(255,255,255,0.2);
 
     --info: #64a8f0;
+
     --danger: #ff6b6b;
 
+
     --correct-bg: #1f4d24;
+
     --correct-border: #65b85c;
+
     --correct-text: #a9e5a2;
 
+
     --wrong-bg: #5a2020;
+
     --wrong-border: #ff6b6b;
+
     --wrong-text: #ffb0b0;
 
+
     --bonus-bg: #5a4618;
+
     --bonus-border: #d8a62b;
+
     --bonus-text: #ffd66b;
+
   }
+
 }
 
 
@@ -99,11 +142,13 @@ body {
     sans-serif;
 
   background: var(--bg);
+
   color: var(--text);
 
   min-height: 100vh;
 
   overscroll-behavior: none;
+
 }
 
 
@@ -117,6 +162,7 @@ body {
     1.5rem
     1rem
     3rem;
+
 }
 
 
@@ -147,6 +193,7 @@ body {
   cursor: pointer;
 
   touch-action: manipulation;
+
 }
 
 
@@ -155,6 +202,7 @@ body {
   opacity: 0.75;
 
   transform: scale(0.98);
+
 }
 
 
@@ -182,17 +230,19 @@ body {
   cursor: pointer;
 
   touch-action: manipulation;
+
 }
 
 
 .btn-secondary:active {
 
   background: var(--bg3);
+
 }
 
 
 /* ══════════════════════════════
-   닉네임
+   닉네임 화면
 ══════════════════════════════ */
 
 #screen-nick {
@@ -204,6 +254,7 @@ body {
   align-items: center;
 
   padding-top: 3.5rem;
+
 }
 
 
@@ -216,6 +267,7 @@ body {
   margin-bottom: 6px;
 
   text-align: center;
+
 }
 
 
@@ -230,6 +282,7 @@ body {
   text-align: center;
 
   line-height: 1.6;
+
 }
 
 
@@ -257,6 +310,7 @@ body {
   outline: none;
 
   -webkit-appearance: none;
+
 }
 
 
@@ -267,22 +321,25 @@ body {
   box-shadow:
     0 0 0 3px
     rgba(24,95,165,0.12);
+
 }
 
 
 #nick-ok {
 
   max-width: 300px;
+
 }
 
 
 /* ══════════════════════════════
-   게임
+   게임 화면
 ══════════════════════════════ */
 
 #screen-game {
 
   display: none;
+
 }
 
 
@@ -295,6 +352,7 @@ body {
   gap: 10px;
 
   margin-bottom: 1rem;
+
 }
 
 
@@ -313,6 +371,7 @@ body {
   overflow: hidden;
 
   text-overflow: ellipsis;
+
 }
 
 
@@ -325,6 +384,7 @@ body {
   align-items: flex-end;
 
   flex-shrink: 0;
+
 }
 
 
@@ -339,12 +399,14 @@ body {
   line-height: 1;
 
   color: var(--text);
+
 }
 
 
 #timer.urgent {
 
   color: var(--danger);
+
 }
 
 
@@ -355,6 +417,7 @@ body {
   color: var(--text2);
 
   margin-top: 1px;
+
 }
 
 
@@ -377,6 +440,7 @@ body {
   padding: 10px 16px;
 
   margin-bottom: 1rem;
+
 }
 
 
@@ -385,6 +449,7 @@ body {
   font-size: 13px;
 
   color: var(--text2);
+
 }
 
 
@@ -395,6 +460,7 @@ body {
   font-weight: 700;
 
   font-variant-numeric: tabular-nums;
+
 }
 
 
@@ -405,6 +471,7 @@ body {
   color: var(--text2);
 
   text-align: right;
+
 }
 
 
@@ -415,11 +482,12 @@ body {
   font-weight: 700;
 
   font-size: 16px;
+
 }
 
 
 /* ══════════════════════════════
-   보너스 상태 표시
+   보너스 상태
 ══════════════════════════════ */
 
 #bonus-status {
@@ -444,12 +512,14 @@ body {
   padding: 8px;
 
   margin-bottom: 10px;
+
 }
 
 
 #bonus-status.show {
 
   display: block;
+
 }
 
 
@@ -470,11 +540,12 @@ body {
   font-size: 58px;
 
   font-weight: 700;
+
 }
 
 
 /* ══════════════════════════════
-   그리드
+   숫자 그리드
 ══════════════════════════════ */
 
 #grid {
@@ -487,12 +558,9 @@ body {
   gap: 10px;
 
   margin-bottom: 10px;
+
 }
 
-
-/* ══════════════════════════════
-   일반 카드
-══════════════════════════════ */
 
 .card {
 
@@ -530,23 +598,19 @@ body {
     background 0.1s,
     border-color 0.1s,
     color 0.1s;
+
 }
 
 
-.card.active {
-
-  cursor: pointer;
-}
-
-
-.card.active:active {
+.card:active {
 
   transform: scale(0.91);
+
 }
 
 
 /* ══════════════════════════════
-   정답
+   정답 효과
 ══════════════════════════════ */
 
 .card.correct {
@@ -558,11 +622,12 @@ body {
   color: var(--correct-text);
 
   transform: scale(0.93);
+
 }
 
 
 /* ══════════════════════════════
-   오답
+   오답 효과
 ══════════════════════════════ */
 
 .card.wrong {
@@ -574,35 +639,52 @@ body {
   color: var(--wrong-text);
 
   animation: shake 0.35s;
+
 }
 
 
 @keyframes shake {
 
-  0%, 100% {
-    transform: translateX(0);
+  0%,100% {
+
+    transform:
+      translateX(0);
+
   }
 
   20% {
-    transform: translateX(-8px);
+
+    transform:
+      translateX(-8px);
+
   }
 
   40% {
-    transform: translateX(8px);
+
+    transform:
+      translateX(8px);
+
   }
 
   60% {
-    transform: translateX(-5px);
+
+    transform:
+      translateX(-5px);
+
   }
 
   80% {
-    transform: translateX(5px);
+
+    transform:
+      translateX(5px);
+
   }
+
 }
 
 
 /* ══════════════════════════════
-   사라진 카드
+   빈 카드
 ══════════════════════════════ */
 
 .card.empty {
@@ -610,6 +692,7 @@ body {
   visibility: hidden;
 
   pointer-events: none;
+
 }
 
 
@@ -630,13 +713,14 @@ body {
 
   cursor: pointer;
 
-  user-select: none;
 }
 
 
 .card.bonus:active {
 
-  transform: scale(0.91);
+  transform:
+    scale(0.91);
+
 }
 
 
@@ -644,27 +728,38 @@ body {
 
   animation:
     bonusPop 0.12s ease;
+
 }
 
 
 @keyframes bonusPop {
 
   0% {
-    transform: scale(1);
+
+    transform:
+      scale(1);
+
   }
 
   50% {
-    transform: scale(0.88);
+
+    transform:
+      scale(0.88);
+
   }
 
   100% {
-    transform: scale(1);
+
+    transform:
+      scale(1);
+
   }
+
 }
 
 
 /* ══════════════════════════════
-   결과
+   결과 팝업
 ══════════════════════════════ */
 
 #screen-result {
@@ -683,12 +778,14 @@ body {
   align-items: flex-end;
 
   justify-content: center;
+
 }
 
 
 #screen-result.show {
 
   display: flex;
+
 }
 
 
@@ -719,6 +816,7 @@ body {
 
   animation:
     slideUp 0.25s ease;
+
 }
 
 
@@ -730,6 +828,7 @@ body {
       translateY(60px);
 
     opacity: 0;
+
   }
 
   to {
@@ -738,7 +837,9 @@ body {
       translateY(0);
 
     opacity: 1;
+
   }
+
 }
 
 
@@ -752,6 +853,7 @@ body {
     0.5px solid var(--border);
 
   margin-bottom: 1.25rem;
+
 }
 
 
@@ -762,6 +864,7 @@ body {
   color: var(--text2);
 
   margin-bottom: 4px;
+
 }
 
 
@@ -772,6 +875,7 @@ body {
   font-weight: 600;
 
   margin-bottom: 6px;
+
 }
 
 
@@ -784,6 +888,7 @@ body {
   line-height: 1;
 
   margin-bottom: 4px;
+
 }
 
 
@@ -794,6 +899,7 @@ body {
   color: var(--text2);
 
   margin-bottom: 8px;
+
 }
 
 
@@ -802,6 +908,7 @@ body {
   font-size: 14px;
 
   color: var(--text2);
+
 }
 
 
@@ -810,6 +917,7 @@ body {
   color: var(--info);
 
   font-size: 20px;
+
 }
 
 
@@ -824,6 +932,7 @@ body {
   text-align: center;
 
   margin-bottom: 0.75rem;
+
 }
 
 
@@ -841,12 +950,14 @@ body {
     0.5px solid var(--border);
 
   font-size: 15px;
+
 }
 
 
 .lb-row:last-child {
 
   border-bottom: none;
+
 }
 
 
@@ -863,6 +974,7 @@ body {
   flex-shrink: 0;
 
   font-size: 14px;
+
 }
 
 
@@ -871,6 +983,7 @@ body {
 .lb-rank.bronze {
 
   font-size: 20px;
+
 }
 
 
@@ -885,6 +998,7 @@ body {
   text-overflow: ellipsis;
 
   white-space: nowrap;
+
 }
 
 
@@ -897,6 +1011,7 @@ body {
   min-width: 48px;
 
   text-align: right;
+
 }
 
 
@@ -910,6 +1025,7 @@ body {
   margin: 2px -4px;
 
   padding: 8px;
+
 }
 
 
@@ -917,12 +1033,14 @@ body {
 .lb-row.me .lb-score {
 
   color: var(--info);
+
 }
 
 
 .lb-row.me .lb-rank {
 
   color: var(--info);
+
 }
 
 
@@ -935,6 +1053,7 @@ body {
   font-size: 14px;
 
   color: var(--text2);
+
 }
 
 
@@ -947,6 +1066,7 @@ body {
   gap: 10px;
 
   margin-top: 1.5rem;
+
 }
 
 
@@ -967,6 +1087,7 @@ body {
   pointer-events: none;
 
   z-index: 10;
+
 }
 
 </style>
@@ -981,7 +1102,7 @@ body {
 
 
 <!-- ══════════════════════════════
-     닉네임
+     닉네임 화면
 ══════════════════════════════ -->
 
 <div id="screen-nick">
@@ -991,9 +1112,13 @@ body {
   </div>
 
   <div class="game-sub">
+
     1분 동안 최대한 많은 숫자를<br>
+
     순서대로 눌러보세요
+
   </div>
+
 
   <input
     id="nick-input"
@@ -1004,6 +1129,7 @@ body {
     autocorrect="off"
     spellcheck="false"
   >
+
 
   <button
     id="nick-ok"
@@ -1018,7 +1144,7 @@ body {
 
 
 <!-- ══════════════════════════════
-     게임
+     게임 화면
 ══════════════════════════════ -->
 
 <div id="screen-game">
@@ -1027,6 +1153,7 @@ body {
   <div id="header">
 
     <span id="nick-badge"></span>
+
 
     <div id="timer-wrap">
 
@@ -1082,7 +1209,12 @@ body {
   <div id="bonus-status">
 
     🎁 BONUS!
-    <span id="bonus-time">10</span>초
+
+    <span id="bonus-time">
+      10
+    </span>
+
+    초
 
   </div>
 
@@ -1101,12 +1233,13 @@ body {
 
 
 <!-- ══════════════════════════════
-     결과
+     결과 팝업
 ══════════════════════════════ -->
 
 <div id="screen-result">
 
   <div id="result-sheet">
+
 
     <div class="result-my">
 
@@ -1114,20 +1247,26 @@ body {
         최종 점수
       </div>
 
+
       <div
         class="r-name"
         id="r-name">
       </div>
 
+
       <div
         class="r-score"
         id="r-score">
+
         0
+
       </div>
+
 
       <div class="r-score-label">
         점
       </div>
+
 
       <div
         class="r-rank"
@@ -1135,6 +1274,7 @@ body {
       </div>
 
     </div>
+
 
 
     <div class="lb-header">
@@ -1148,6 +1288,7 @@ body {
 
 
     <div id="lb-rows"></div>
+
 
 
     <div class="result-actions">
@@ -1222,6 +1363,7 @@ const firebaseConfig = {
 
   appId:
     "1:209419310847:web:916c8f6fc0a730b8191eca"
+
 };
 
 
@@ -1233,19 +1375,32 @@ const db =
   getDatabase(app);
 
 
+
 window.fbSave =
 async (name, score) => {
 
   await push(
-    ref(db, 'scores'),
+
+    ref(
+      db,
+      'scores'
+    ),
+
     {
+
       name,
+
       score,
-      t: Date.now()
+
+      t:
+        Date.now()
+
     }
+
   );
 
 };
+
 
 
 window.fbLoadTop10 =
@@ -1253,11 +1408,16 @@ async () => {
 
   const snap =
     await get(
-      ref(db, 'scores')
+      ref(
+        db,
+        'scores'
+      )
     );
 
 
-  if (!snap.exists()) {
+  if (
+    !snap.exists()
+  ) {
 
     return [];
 
@@ -1273,18 +1433,21 @@ async () => {
   const best = {};
 
 
-  rows.forEach(r => {
+  rows.forEach(
+    r => {
 
-    if (
-      !best[r.name] ||
-      r.score > best[r.name].score
-    ) {
+      if (
+        !best[r.name] ||
+        r.score >
+        best[r.name].score
+      ) {
 
-      best[r.name] = r;
+        best[r.name] = r;
+
+      }
 
     }
-
-  });
+  );
 
 
   return Object.values(best)
@@ -1294,7 +1457,10 @@ async () => {
         b.score - a.score
     )
 
-    .slice(0,10);
+    .slice(
+      0,
+      10
+    );
 
 };
 
@@ -1305,7 +1471,7 @@ async () => {
 <script>
 
 /* ══════════════════════════════
-   변수
+   기본 변수
 ══════════════════════════════ */
 
 const $ =
@@ -1315,88 +1481,412 @@ const $ =
 
 let nickname = '';
 
+
 let cells = [];
+
+
+/*
+   다음에 눌러야 하는 숫자
+*/
 
 let nextExp = 1;
 
+
+/*
+   현재 점수
+*/
+
 let score = 0;
+
+
+/*
+   현재 판
+
+   1판 = 1점
+   2판 = 2점
+   3판 = 3점
+   ...
+*/
 
 let round = 1;
 
 
 /*
-   총 제한시간
+   전체 제한시간
 
    60초
 */
 
 let timeLeft = 60;
 
+
 let timerInt = null;
 
-
-/*
-   일반 게임 진행 여부
-*/
 
 let gameActive = false;
 
 
-/*
-   카운트다운 중인지
-*/
-
 let countdownRunning = false;
 
 
-/*
-   보너스 판인지
-*/
+/* ══════════════════════════════
+   보너스 관련
+══════════════════════════════ */
 
 let bonusActive = false;
 
 
-/*
-   보너스 타이머
-*/
-
 let bonusTimerInt = null;
 
-
-/*
-   보너스 판에서 남은 시간
-*/
 
 let bonusTimeLeft = 10;
 
 
 /*
-   보너스 판이 끝난 후
-   원래 표시할 숫자들을
-   저장해두는 배열
-
-   예:
-
-   nextExp = 28
-
-   → 원래 28~36이 나와야 함
-
-   이걸 bonusReturnNumbers에
-   저장해둔다.
+   보너스 종료 후
+   복귀할 숫자판
 */
 
 let bonusReturnNumbers = null;
 
 
 /* ══════════════════════════════
-   유틸
+   효과음 관련
+══════════════════════════════ */
+
+let audioCtx = null;
+
+
+let sound30Played = false;
+
+
+let sound10Played = false;
+
+
+/* ══════════════════════════════
+   오디오 초기화
+══════════════════════════════ */
+
+function initAudio() {
+
+  if (!audioCtx) {
+
+    audioCtx =
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
+
+  }
+
+
+  if (
+    audioCtx.state ===
+    'suspended'
+  ) {
+
+    audioCtx.resume();
+
+  }
+
+}
+
+
+/* ══════════════════════════════
+   기본 음 생성
+══════════════════════════════ */
+
+function tone(
+  frequency,
+  duration,
+  type = 'sine',
+  volume = 0.08,
+  delayTime = 0
+) {
+
+  initAudio();
+
+
+  const osc =
+    audioCtx.createOscillator();
+
+
+  const gain =
+    audioCtx.createGain();
+
+
+  const start =
+    audioCtx.currentTime +
+    delayTime;
+
+
+  osc.type =
+    type;
+
+
+  osc.frequency.setValueAtTime(
+    frequency,
+    start
+  );
+
+
+  gain.gain.setValueAtTime(
+    0.0001,
+    start
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    volume,
+    start + 0.01
+  );
+
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    start + duration
+  );
+
+
+  osc.connect(gain);
+
+  gain.connect(
+    audioCtx.destination
+  );
+
+
+  osc.start(start);
+
+  osc.stop(
+    start +
+    duration +
+    0.02
+  );
+
+}
+
+
+/* ══════════════════════════════
+   정답 효과음
+══════════════════════════════ */
+
+function soundCorrect() {
+
+  tone(
+    700,
+    0.10,
+    'sine',
+    0.07
+  );
+
+
+  tone(
+    950,
+    0.12,
+    'sine',
+    0.055,
+    0.06
+  );
+
+}
+
+
+/* ══════════════════════════════
+   오답 효과음
+══════════════════════════════ */
+
+function soundWrong() {
+
+  tone(
+    180,
+    0.16,
+    'square',
+    0.045
+  );
+
+}
+
+
+/* ══════════════════════════════
+   보너스 등장
+══════════════════════════════ */
+
+function soundBonusStart() {
+
+  tone(
+    500,
+    0.13,
+    'sine',
+    0.06
+  );
+
+
+  tone(
+    700,
+    0.13,
+    'sine',
+    0.06,
+    0.10
+  );
+
+
+  tone(
+    1000,
+    0.20,
+    'sine',
+    0.07,
+    0.20
+  );
+
+}
+
+
+/* ══════════════════════════════
+   보너스 클릭
+══════════════════════════════ */
+
+function soundBonusClick() {
+
+  tone(
+    900,
+    0.055,
+    'sine',
+    0.035
+  );
+
+}
+
+
+/* ══════════════════════════════
+   30초
+══════════════════════════════ */
+
+function sound30Seconds() {
+
+  tone(
+    600,
+    0.12,
+    'sine',
+    0.06
+  );
+
+
+  tone(
+    800,
+    0.18,
+    'sine',
+    0.06,
+    0.14
+  );
+
+}
+
+
+/* ══════════════════════════════
+   10초
+══════════════════════════════ */
+
+function sound10Seconds() {
+
+  tone(
+    850,
+    0.10,
+    'square',
+    0.045
+  );
+
+
+  tone(
+    650,
+    0.10,
+    'square',
+    0.045,
+    0.13
+  );
+
+}
+
+
+/* ══════════════════════════════
+   게임 시작
+══════════════════════════════ */
+
+function soundGameStart() {
+
+  tone(
+    500,
+    0.10,
+    'sine',
+    0.055
+  );
+
+
+  tone(
+    700,
+    0.10,
+    'sine',
+    0.055,
+    0.12
+  );
+
+
+  tone(
+    1000,
+    0.22,
+    'sine',
+    0.075,
+    0.24
+  );
+
+}
+
+
+/* ══════════════════════════════
+   게임 종료
+══════════════════════════════ */
+
+function soundGameEnd() {
+
+  tone(
+    800,
+    0.15,
+    'sine',
+    0.06
+  );
+
+
+  tone(
+    650,
+    0.15,
+    'sine',
+    0.06,
+    0.16
+  );
+
+
+  tone(
+    500,
+    0.28,
+    'sine',
+    0.065,
+    0.32
+  );
+
+}
+
+
+/* ══════════════════════════════
+   딜레이
 ══════════════════════════════ */
 
 function delay(ms) {
 
   return new Promise(
     resolve =>
-      setTimeout(resolve, ms)
+      setTimeout(
+        resolve,
+        ms
+      )
   );
 
 }
@@ -1412,6 +1902,7 @@ function showNick() {
 
   stopBonusTimer();
 
+
   gameActive = false;
 
   countdownRunning = false;
@@ -1419,22 +1910,31 @@ function showNick() {
   bonusActive = false;
 
 
-  $('screen-nick').style.display =
-    'flex';
+  $('screen-nick')
+    .style.display =
+      'flex';
 
-  $('screen-game').style.display =
-    'none';
+
+  $('screen-game')
+    .style.display =
+      'none';
+
 
   $('screen-result')
-    .classList.remove('show');
+    .classList.remove(
+      'show'
+    );
 
 
-  $('nick-input').value = '';
+  $('nick-input')
+    .value =
+      '';
 
 
   setTimeout(
     () =>
-      $('nick-input').focus(),
+      $('nick-input')
+        .focus(),
     100
   );
 
@@ -1443,14 +1943,20 @@ function showNick() {
 
 function showGame() {
 
-  $('screen-nick').style.display =
-    'none';
+  $('screen-nick')
+    .style.display =
+      'none';
 
-  $('screen-game').style.display =
-    'block';
+
+  $('screen-game')
+    .style.display =
+      'block';
+
 
   $('screen-result')
-    .classList.remove('show');
+    .classList.remove(
+      'show'
+    );
 
 }
 
@@ -1458,13 +1964,15 @@ function showGame() {
 function showResult() {
 
   $('screen-result')
-    .classList.add('show');
+    .classList.add(
+      'show'
+    );
 
 }
 
 
 /* ══════════════════════════════
-   닉네임
+   닉네임 입력
 ══════════════════════════════ */
 
 function enterNickname() {
@@ -1477,7 +1985,8 @@ function enterNickname() {
 
   if (!v) {
 
-    $('nick-input').focus();
+    $('nick-input')
+      .focus();
 
     return;
 
@@ -1485,6 +1994,14 @@ function enterNickname() {
 
 
   nickname = v;
+
+
+  /*
+    모바일 브라우저에서
+    오디오 사용 권한 확보
+  */
+
+  initAudio();
 
 
   $('nick-badge')
@@ -1499,7 +2016,6 @@ function enterNickname() {
 
 
   /*
-    닉네임 입력 후
     자동 시작
   */
 
@@ -1520,7 +2036,10 @@ $('nick-input')
     'keydown',
     e => {
 
-      if (e.key === 'Enter') {
+      if (
+        e.key ===
+        'Enter'
+      ) {
 
         enterNickname();
 
@@ -1558,7 +2077,7 @@ function makeNumbers(start) {
 
 
 /* ══════════════════════════════
-   배열 섞기
+   셔플
 ══════════════════════════════ */
 
 function shuffle(array) {
@@ -1568,8 +2087,11 @@ function shuffle(array) {
 
 
   for (
-    let i = arr.length - 1;
+    let i =
+      arr.length - 1;
+
     i > 0;
+
     i--
   ) {
 
@@ -1598,7 +2120,7 @@ function shuffle(array) {
 
 
 /* ══════════════════════════════
-   일반 그리드 생성
+   숫자판 생성
 ══════════════════════════════ */
 
 function buildGrid() {
@@ -1607,20 +2129,26 @@ function buildGrid() {
     $('grid');
 
 
-  grid.innerHTML = '';
+  grid.innerHTML =
+    '';
+
 
   cells = [];
 
 
   const nums =
-    makeNumbers(nextExp);
+    makeNumbers(
+      nextExp
+    );
 
 
   nums.forEach(
     (n, idx) => {
 
       const d =
-        document.createElement('div');
+        document.createElement(
+          'div'
+        );
 
 
       d.className =
@@ -1664,54 +2192,67 @@ function buildGrid() {
 
 
 /* ══════════════════════════════
-   활성 카드
+   활성 숫자 표시
 ══════════════════════════════ */
 
 function updateActiveCard() {
 
-  if (bonusActive) {
+  if (
+    bonusActive
+  ) {
 
     return;
 
   }
 
 
-  cells.forEach(cell => {
+  cells.forEach(
+    cell => {
 
-    cell.el.classList.remove(
-      'active'
-    );
+      cell.el
+        .classList
+        .remove(
+          'active'
+        );
 
 
-    if (
-      cell.num === null
-    ) {
+      if (
+        cell.num === null
+      ) {
 
-      cell.el.classList.add(
-        'empty'
-      );
+        cell.el
+          .classList
+          .add(
+            'empty'
+          );
 
-      return;
+        return;
+
+      }
+
+
+      cell.el
+        .classList
+        .remove(
+          'empty'
+        );
+
+
+      if (
+        cell.num ===
+        nextExp
+      ) {
+
+        cell.el
+          .classList
+          .add(
+            'active'
+          );
+
+      }
 
     }
-
-
-    cell.el.classList.remove(
-      'empty'
-    );
-
-
-    if (
-      cell.num === nextExp
-    ) {
-
-      cell.el.classList.add(
-        'active'
-      );
-
-    }
-
-  });
+  );
 
 
   $('next-num')
@@ -1722,28 +2263,27 @@ function updateActiveCard() {
 
 
 /* ══════════════════════════════
-   일반 판 → 다음 판
+   한 판 완료
 ══════════════════════════════ */
 
 function refillGrid() {
-
-  /*
-    다음 판으로 넘어가기 전에
-    라운드를 증가시킨다.
-  */
 
   round++;
 
 
   /*
-    10% 확률로 보너스 판
+    10% 확률로
+    보너스 판
   */
 
   const isBonus =
-    Math.random() < 0.10;
+    Math.random() <
+    0.10;
 
 
-  if (isBonus) {
+  if (
+    isBonus
+  ) {
 
     startBonusRound();
 
@@ -1767,35 +2307,26 @@ function refillGrid() {
 
 function startBonusRound() {
 
-  /*
-    현재 nextExp가
-    보너스 판이 끝난 뒤
-    시작해야 할 숫자.
-
-    예:
-
-    28이 다음 숫자라면
-
-    보너스 종료 후
-    28~36이 등장한다.
-  */
-
-  bonusReturnNumbers =
-    makeNumbers(nextExp);
-
-
-  bonusActive = true;
-
-
-  bonusTimeLeft = 10;
+  bonusActive =
+    true;
 
 
   /*
-    보너스 상태 표시
+    보너스 등장 효과음
   */
+
+  soundBonusStart();
+
+
+  bonusTimeLeft =
+    10;
+
 
   $('bonus-status')
-    .classList.add('show');
+    .classList
+    .add(
+      'show'
+    );
 
 
   $('bonus-time')
@@ -1808,18 +2339,20 @@ function startBonusRound() {
       'hidden';
 
 
-  /*
-    보너스 버튼 9개 생성
-  */
-
   const grid =
     $('grid');
 
 
-  grid.innerHTML = '';
+  grid.innerHTML =
+    '';
+
 
   cells = [];
 
+
+  /*
+    BONUS 버튼 9개
+  */
 
   for (
     let i = 0;
@@ -1828,7 +2361,9 @@ function startBonusRound() {
   ) {
 
     const d =
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
 
     d.className =
@@ -1865,10 +2400,6 @@ function startBonusRound() {
   }
 
 
-  /*
-    보너스 타이머 시작
-  */
-
   stopBonusTimer();
 
 
@@ -1885,7 +2416,8 @@ function startBonusRound() {
 
 
         if (
-          bonusTimeLeft <= 0
+          bonusTimeLeft <=
+          0
         ) {
 
           endBonusRound();
@@ -1916,9 +2448,6 @@ function onBonusCard(card) {
 
 
   /*
-    보너스 버튼은
-    누르면 사라지지 않는다.
-
     클릭할 때마다 +1
   */
 
@@ -1930,17 +2459,25 @@ function onBonusCard(card) {
       score;
 
 
+  soundBonusClick();
+
+
   /*
-    클릭 효과만 잠깐 발생
+    버튼은 사라지지 않고
+    클릭 애니메이션만 발생
   */
 
-  card.classList.remove('hit');
+  card.classList.remove(
+    'hit'
+  );
 
 
   void card.offsetWidth;
 
 
-  card.classList.add('hit');
+  card.classList.add(
+    'hit'
+  );
 
 
   setTimeout(
@@ -1975,15 +2512,15 @@ function endBonusRound() {
   stopBonusTimer();
 
 
-  bonusActive = false;
+  bonusActive =
+    false;
 
-
-  /*
-    보너스 상태 제거
-  */
 
   $('bonus-status')
-    .classList.remove('show');
+    .classList
+    .remove(
+      'show'
+    );
 
 
   $('next-hint')
@@ -1992,8 +2529,11 @@ function endBonusRound() {
 
 
   /*
-    보너스 판을 끝내고
-    원래 나와야 했던 판으로 복귀
+    nextExp는 보너스 동안
+    변하지 않았기 때문에
+
+    원래 다음 숫자부터
+    다시 시작한다.
   */
 
   buildGrid();
@@ -2008,14 +2548,17 @@ function endBonusRound() {
 function stopBonusTimer() {
 
   if (
-    bonusTimerInt !== null
+    bonusTimerInt !==
+    null
   ) {
 
     clearInterval(
       bonusTimerInt
     );
 
-    bonusTimerInt = null;
+
+    bonusTimerInt =
+      null;
 
   }
 
@@ -2052,33 +2595,43 @@ function onCard(idx) {
   }
 
 
-  /*
-    오답
-  */
+  /* ══════════════════════
+     오답
+  ══════════════════════ */
 
   if (
-    cell.num !== nextExp
+    cell.num !==
+    nextExp
   ) {
 
-    cell.el.classList.remove(
-      'wrong'
-    );
+    soundWrong();
+
+
+    cell.el
+      .classList
+      .remove(
+        'wrong'
+      );
 
 
     void cell.el.offsetWidth;
 
 
-    cell.el.classList.add(
-      'wrong'
-    );
+    cell.el
+      .classList
+      .add(
+        'wrong'
+      );
 
 
     setTimeout(
       () => {
 
-        cell.el.classList.remove(
-          'wrong'
-        );
+        cell.el
+          .classList
+          .remove(
+            'wrong'
+          );
 
       },
       350
@@ -2090,11 +2643,20 @@ function onCard(idx) {
   }
 
 
-  /*
-    정답
+  /* ══════════════════════
+     정답
+  ══════════════════════ */
 
-    현재 라운드의 점수만큼
-    점수 증가
+  soundCorrect();
+
+
+  /*
+    현재 라운드만큼 점수 증가
+
+    1판 → +1
+    2판 → +2
+    3판 → +3
+    ...
   */
 
   score += round;
@@ -2109,13 +2671,15 @@ function onCard(idx) {
     초록색 효과
   */
 
-  cell.el.classList.add(
-    'correct'
-  );
+  cell.el
+    .classList
+    .add(
+      'correct'
+    );
 
 
   /*
-    잠깐 초록색을 보여준 뒤
+    잠깐 초록색을 보여준 후
     버튼 제거
   */
 
@@ -2132,31 +2696,38 @@ function onCard(idx) {
       }
 
 
-      cell.num = null;
-
-      cell.el.textContent = '';
-
-
-      cell.el.classList.remove(
-        'active',
-        'correct'
-      );
+      cell.num =
+        null;
 
 
-      cell.el.classList.add(
-        'empty'
-      );
+      cell.el.textContent =
+        '';
+
+
+      cell.el
+        .classList
+        .remove(
+          'active',
+          'correct'
+        );
+
+
+      cell.el
+        .classList
+        .add(
+          'empty'
+        );
 
 
       /*
-        다음 숫자로 이동
+        다음 숫자
       */
 
       nextExp++;
 
 
       /*
-        아직 남은 버튼이 있는지 확인
+        남은 버튼 확인
       */
 
       const remaining =
@@ -2167,7 +2738,7 @@ function onCard(idx) {
 
 
       /*
-        9개 모두 제거
+        9개 전부 제거
 
         → 다음 판
       */
@@ -2199,7 +2770,16 @@ function onCard(idx) {
 
 function startTimer() {
 
-  timeLeft = 60;
+  timeLeft =
+    60;
+
+
+  sound30Played =
+    false;
+
+
+  sound10Played =
+    false;
 
 
   $('timer')
@@ -2208,7 +2788,8 @@ function startTimer() {
 
 
   $('timer')
-    .classList.remove(
+    .classList
+    .remove(
       'urgent'
     );
 
@@ -2225,20 +2806,70 @@ function startTimer() {
             timeLeft;
 
 
+        /*
+          30초 알림
+        */
+
         if (
-          timeLeft <= 10
+          timeLeft ===
+          30 &&
+          !sound30Played
+        ) {
+
+          sound30Played =
+            true;
+
+
+          sound30Seconds();
+
+        }
+
+
+        /*
+          10초 알림
+        */
+
+        if (
+          timeLeft ===
+          10 &&
+          !sound10Played
+        ) {
+
+          sound10Played =
+            true;
+
+
+          sound10Seconds();
+
+        }
+
+
+        /*
+          10초 이하
+          빨간색
+        */
+
+        if (
+          timeLeft <=
+          10
         ) {
 
           $('timer')
-            .classList.add(
+            .classList
+            .add(
               'urgent'
             );
 
         }
 
 
+        /*
+          게임 종료
+        */
+
         if (
-          timeLeft <= 0
+          timeLeft <=
+          0
         ) {
 
           endGame();
@@ -2252,17 +2883,24 @@ function startTimer() {
 }
 
 
+/* ══════════════════════════════
+   타이머 정지
+══════════════════════════════ */
+
 function stopTimer() {
 
   if (
-    timerInt !== null
+    timerInt !==
+    null
   ) {
 
     clearInterval(
       timerInt
     );
 
-    timerInt = null;
+
+    timerInt =
+      null;
 
   }
 
@@ -2280,23 +2918,36 @@ function resetGame() {
   stopBonusTimer();
 
 
-  gameActive = false;
-
-  countdownRunning = false;
-
-  bonusActive = false;
+  gameActive =
+    false;
 
 
-  nextExp = 1;
-
-  score = 0;
-
-  round = 1;
-
-  timeLeft = 60;
+  countdownRunning =
+    false;
 
 
-  bonusReturnNumbers = null;
+  bonusActive =
+    false;
+
+
+  nextExp =
+    1;
+
+
+  score =
+    0;
+
+
+  round =
+    1;
+
+
+  timeLeft =
+    60;
+
+
+  bonusReturnNumbers =
+    null;
 
 
   $('timer')
@@ -2305,7 +2956,8 @@ function resetGame() {
 
 
   $('timer')
-    .classList.remove(
+    .classList
+    .remove(
       'urgent'
     );
 
@@ -2326,7 +2978,10 @@ function resetGame() {
 
 
   $('bonus-status')
-    .classList.remove('show');
+    .classList
+    .remove(
+      'show'
+    );
 
 
   $('next-hint')
@@ -2354,16 +3009,24 @@ async function startGame() {
   }
 
 
-  countdownRunning = true;
+  countdownRunning =
+    true;
 
-  gameActive = false;
+
+  gameActive =
+    false;
 
 
-  nextExp = 1;
+  nextExp =
+    1;
 
-  score = 0;
 
-  round = 1;
+  score =
+    0;
+
+
+  round =
+    1;
 
 
   $('score-disp')
@@ -2378,6 +3041,10 @@ async function startGame() {
     $('countdown');
 
 
+  /*
+    카운트다운
+  */
+
   for (
     const text of
     ['3','2','1','시작!']
@@ -2388,9 +3055,14 @@ async function startGame() {
 
 
     await delay(
-      text === '시작!'
+
+      text ===
+      '시작!'
+
         ? 700
+
         : 820
+
     );
 
   }
@@ -2400,9 +3072,19 @@ async function startGame() {
     '';
 
 
-  gameActive = true;
+  /*
+    시작 효과음
+  */
 
-  countdownRunning = false;
+  soundGameStart();
+
+
+  gameActive =
+    true;
+
+
+  countdownRunning =
+    false;
 
 
   startTimer();
@@ -2415,6 +3097,10 @@ async function startGame() {
 ══════════════════════════════ */
 
 async function endGame() {
+
+  /*
+    중복 종료 방지
+  */
 
   if (
     !gameActive
@@ -2430,11 +3116,23 @@ async function endGame() {
   stopBonusTimer();
 
 
-  gameActive = false;
+  gameActive =
+    false;
 
-  bonusActive = false;
 
-  countdownRunning = false;
+  bonusActive =
+    false;
+
+
+  countdownRunning =
+    false;
+
+
+  /*
+    종료 효과음
+  */
+
+  soundGameEnd();
 
 
   const finalScore =
@@ -2442,11 +3140,14 @@ async function endGame() {
 
 
   /*
-    보너스 UI 정리
+    보너스 UI 제거
   */
 
   $('bonus-status')
-    .classList.remove('show');
+    .classList
+    .remove(
+      'show'
+    );
 
 
   $('next-hint')
@@ -2501,7 +3202,7 @@ async function endGame() {
 
     $('lb-loading')
       .textContent =
-        '랭킹 불러오는 중...';
+      '랭킹 불러오는 중...';
 
 
     const top10 =
@@ -2510,7 +3211,7 @@ async function endGame() {
 
     $('lb-loading')
       .style.display =
-        'none';
+      'none';
 
 
     renderRanking(
@@ -2552,6 +3253,7 @@ function renderRanking(
 
     $('lb-rows')
       .innerHTML =
+
         '<div style="text-align:center;padding:1rem;color:var(--text2);font-size:14px;">아직 기록이 없습니다</div>';
 
     return;
@@ -2559,23 +3261,26 @@ function renderRanking(
   }
 
 
-  const medals =
-    [
-      '🥇',
-      '🥈',
-      '🥉'
-    ];
+  const medals = [
+
+    '🥇',
+    '🥈',
+    '🥉'
+
+  ];
 
 
-  const rankClasses =
-    [
-      'gold',
-      'silver',
-      'bronze'
-    ];
+  const rankClasses = [
+
+    'gold',
+    'silver',
+    'bronze'
+
+  ];
 
 
-  let myRank = -1;
+  let myRank =
+    -1;
 
 
   const html =
@@ -2584,8 +3289,10 @@ function renderRanking(
         (r,i) => {
 
           const isMe =
-            r.name === myName &&
-            r.score === myScore;
+            r.name ===
+            myName &&
+            r.score ===
+            myScore;
 
 
           if (
@@ -2601,30 +3308,46 @@ function renderRanking(
 
           const rankLabel =
             i < 3
+
               ? medals[i]
+
               : i + 1;
 
 
           const rankCls =
             i < 3
+
               ? rankClasses[i]
+
               : '';
 
 
           return `
 
-            <div class="lb-row${isMe ? ' me' : ''}">
+            <div
+              class="lb-row${isMe ? ' me' : ''}">
 
-              <span class="lb-rank ${rankCls}">
+              <span
+                class="lb-rank ${rankCls}">
+
                 ${rankLabel}
+
               </span>
 
-              <span class="lb-name">
+
+              <span
+                class="lb-name">
+
                 ${r.name}
+
               </span>
 
-              <span class="lb-score">
+
+              <span
+                class="lb-score">
+
                 ${r.score}점
+
               </span>
 
             </div>
@@ -2647,6 +3370,7 @@ function renderRanking(
 
     $('r-rank')
       .innerHTML =
+
         `<strong>${myRank}위</strong> / ${rows.length}명`;
 
   }
@@ -2672,7 +3396,8 @@ $('btn-again')
     () => {
 
       $('screen-result')
-        .classList.remove(
+        .classList
+        .remove(
           'show'
         );
 
@@ -2682,6 +3407,10 @@ $('btn-again')
 
       resetGame();
 
+
+      /*
+        자동 시작
+      */
 
       startGame();
 
@@ -2703,7 +3432,9 @@ $('btn-new')
     }
   );
 
+
 </script>
+
 
 
 <div id="credit">
@@ -2712,4 +3443,5 @@ $('btn-new')
 
 
 </body>
+
 </html>
